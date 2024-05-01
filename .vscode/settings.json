@@ -1,0 +1,19 @@
+{
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
+    },
+    "java.configuration.maven.userSettings": "C:\\maven\\apache-maven-3.6.2",
+    "java.contentProvider.preferred": "false",
+    "java.format.settings.profile": "",
+    "java.format.settings.url": "",
+    "java.home": "C:\\Program Files\\Java\\jdk-11.0.7",
+    "java.import.gradle.arguments": "",
+    "java.import.gradle.home": "",
+    "java.import.gradle.jvmArguments": "",
+    "java.import.gradle.user.home": "",
+    "java.import.gradle.version": "",
+    "java.import.maven.enabled": false
+}
