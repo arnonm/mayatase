@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MayaSecurityHistoricalRequest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tase</a> &gt; <a href="index.source.html" class="el_package">com.maya.requestclasses</a> &gt; <span class="el_source">MayaSecurityHistoricalRequest.java</span></div><h1>MayaSecurityHistoricalRequest.java</h1><pre class="source lang-java linenums">package com.maya.requestclasses;
 
 import java.time.LocalDate;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.*;
 import com.maya.utils.Utils.Language;
 
 public class MayaSecurityHistoricalRequest extends MayaSecurityBaseRequest {
@@ -11,34 +8,34 @@ public class MayaSecurityHistoricalRequest extends MayaSecurityBaseRequest {
     private static final String METHOD = &quot;POST&quot;;
 
     public String getEndPoint() {
-<span class="nc" id="L14">        return END_POINT;</span>
+<span class="nc" id="L11">        return END_POINT;</span>
     }
 
     public String getMethod() {
-<span class="nc" id="L18">        return METHOD;</span>
+<span class="nc" id="L15">        return METHOD;</span>
     }
 
     public String getBaseURL() {
-<span class="nc" id="L22">        return super.getMayaApiBaseUrl();</span>
+<span class="nc" id="L19">        return super.getMayaApiBaseUrl();</span>
     }
 
     public MayaSecurityHistoricalRequest(String security_id, LocalDate from_date, LocalDate to_date, int page,
             int p_type,int total_rec, Language lang) throws Exception {
 
-<span class="nc" id="L28">        super();</span>
-<span class="nc" id="L29">        this.headers.remove(&quot;Accept&quot;); // Not for fund</span>
-<span class="nc" id="L30">        this.headers.put(&quot;Content-Type&quot;, &quot;application/json&quot;);</span>
+<span class="nc" id="L25">        super();</span>
+<span class="nc" id="L26">        this.headers.remove(&quot;Accept&quot;); // Not for fund</span>
+<span class="nc" id="L27">        this.headers.put(&quot;Content-Type&quot;, &quot;application/json&quot;);</span>
         // this.headers.replace(&quot;Host&quot;, &quot;mayaapi.tase.co.il&quot;);
-<span class="nc" id="L32">        this.headers.remove(&quot;X-Maya-With&quot;);</span>
+<span class="nc" id="L29">        this.headers.remove(&quot;X-Maya-With&quot;);</span>
 
-<span class="nc" id="L34">        this.params.put(&quot;dFrom&quot;, from_date.toString());</span>
-<span class="nc" id="L35">        this.params.put(&quot;dTo&quot;, to_date.toString());</span>
-<span class="nc" id="L36">        this.params.put(&quot;oID&quot;, security_id);</span>
-<span class="nc" id="L37">        this.params.put(&quot;pageNum&quot;, Integer.toString(page));</span>
-<span class="nc" id="L38">        this.params.put(&quot;pType&quot;, Integer.toString(p_type));</span>
-<span class="nc" id="L39">        this.params.put(&quot;TotalRec&quot;, Integer.toString(total_rec));</span>
-<span class="nc" id="L40">        this.params.put(&quot;lang&quot;, Integer.toString(lang.getValue()));</span>
+<span class="nc" id="L31">        this.params.put(&quot;dFrom&quot;, from_date.toString());</span>
+<span class="nc" id="L32">        this.params.put(&quot;dTo&quot;, to_date.toString());</span>
+<span class="nc" id="L33">        this.params.put(&quot;oID&quot;, security_id);</span>
+<span class="nc" id="L34">        this.params.put(&quot;pageNum&quot;, Integer.toString(page));</span>
+<span class="nc" id="L35">        this.params.put(&quot;pType&quot;, Integer.toString(p_type));</span>
+<span class="nc" id="L36">        this.params.put(&quot;TotalRec&quot;, Integer.toString(total_rec));</span>
+<span class="nc" id="L37">        this.params.put(&quot;lang&quot;, Integer.toString(lang.getValue()));</span>
 
-<span class="nc" id="L42">    }</span>
+<span class="nc" id="L39">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

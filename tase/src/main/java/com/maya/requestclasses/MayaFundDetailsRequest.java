@@ -2,8 +2,6 @@ package com.maya.requestclasses;
 
 import com.maya.utils.Utils.Language;
 
-import java.util.HashMap;
-import java.util.Map;
 
 public class MayaFundDetailsRequest extends MayaFundBaseRequest {
 

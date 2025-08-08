@@ -2,8 +2,6 @@
 
 import com.maya.utils.Utils.Language;
 
-import java.util.HashMap;
-import java.util.Map;
 
 public class MayaFundDetailsRequest extends MayaFundBaseRequest {
 
@@ -13,26 +11,26 @@ public class MayaFundDetailsRequest extends MayaFundBaseRequest {
     
     @Override
     public String getEndPoint(){
-<span class="fc" id="L16">        return END_POINT;</span>
+<span class="fc" id="L14">        return END_POINT;</span>
     }
 
     @Override
     public String getMethod() {
-<span class="fc" id="L21">        return METHOD;</span>
+<span class="fc" id="L19">        return METHOD;</span>
     }
 
 
     public MayaFundDetailsRequest(String securityId, Language lang) throws Exception {
-<span class="pc bpc" id="L26" title="1 of 2 branches missed.">        super(lang != null ? lang: Language.ENGLISH);</span>
+<span class="pc bpc" id="L24" title="1 of 2 branches missed.">        super(lang != null ? lang: Language.ENGLISH);</span>
         // Map&lt;String, String&gt; params = new HashMap&lt;&gt;();
-<span class="fc" id="L28">        this.headers.replace(&quot;Host&quot;, &quot;mayaapi.tase.co.il&quot;);</span>
-<span class="fc" id="L29">        this.headers.remove(&quot;Content-Type&quot;);</span>
-<span class="fc" id="L30">        this.params.put(&quot;fundId&quot;, securityId);</span>
-<span class="fc" id="L31">    }</span>
+<span class="fc" id="L26">        this.headers.replace(&quot;Host&quot;, &quot;mayaapi.tase.co.il&quot;);</span>
+<span class="fc" id="L27">        this.headers.remove(&quot;Content-Type&quot;);</span>
+<span class="fc" id="L28">        this.params.put(&quot;fundId&quot;, securityId);</span>
+<span class="fc" id="L29">    }</span>
 
     public MayaFundDetailsRequest(String securityId) throws Exception {
-<span class="nc" id="L34">        this(securityId, Language.ENGLISH);</span>
-<span class="nc" id="L35">    }</span>
+<span class="nc" id="L32">        this(securityId, Language.ENGLISH);</span>
+<span class="nc" id="L33">    }</span>
 
     
     

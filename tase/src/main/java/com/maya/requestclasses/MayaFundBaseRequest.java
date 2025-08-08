@@ -1,8 +1,8 @@
 package com.maya.requestclasses;
 
 import com.maya.utils.Utils.Language;
-import java.util.Map;
-import java.util.HashMap;
+
+
 
 abstract class MayaFundBaseRequest extends MayaBaseRequest {
    

@@ -1,7 +1,6 @@
 package com.maya.adapters;
 
 import java.lang.reflect.Type;
-import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;

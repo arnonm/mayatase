@@ -1,6 +1,4 @@
 package com.maya.utils;
-import java.util.Iterator;
-import java.util.function.Function;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;

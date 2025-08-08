@@ -11,9 +11,7 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 import com.google.gson.Gson;
-//import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import java.lang.reflect.Type;
 
 import com.maya.utils.Utils.Language;
 import com.maya.jsondata.SecurityListing;
@@ -108,7 +106,8 @@ public class Maya {
 
     private Map<String, Object> FundsToMap(FundListing listing) {
         Gson gson = GSONUtil.createGson();
-        String json = gson.toJson(listing);
+        //Gson gson = new Gson();
+         String json = gson.toJson(listing);
         logger.fine("JSON "+json);
         Map<String, Object> map = gson.fromJson(json, new TypeToken<Map<String, Object>>() {}.getType());
         return map;

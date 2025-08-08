@@ -6,15 +6,6 @@
 /Users/meshulam/JavaProjects/tase-standalone/tase/src/main/java/com/maya/adapters/EmptyStringAsNullTypeAdapter.java
 /Users/meshulam/JavaProjects/tase-standalone/tase/src/main/java/com/maya/adapters/FundsLocalDateAdapter.java
 /Users/meshulam/JavaProjects/tase-standalone/tase/src/main/java/com/maya/adapters/FundsLocalDateTimeAdapter.java
-/Users/meshulam/JavaProjects/tase-standalone/tase/src/main/java/com/maya/fund_not_used/FundAsset.java
-/Users/meshulam/JavaProjects/tase-standalone/tase/src/main/java/com/maya/fund_not_used/FundAssetComposition.java
-/Users/meshulam/JavaProjects/tase-standalone/tase/src/main/java/com/maya/fund_not_used/FundDisclosure.java
-/Users/meshulam/JavaProjects/tase-standalone/tase/src/main/java/com/maya/fund_not_used/FundHistory.java
-/Users/meshulam/JavaProjects/tase-standalone/tase/src/main/java/com/maya/fund_not_used/FundHistoryEntry.java
-/Users/meshulam/JavaProjects/tase-standalone/tase/src/main/java/com/maya/fund_not_used/FundIndicator.java
-/Users/meshulam/JavaProjects/tase-standalone/tase/src/main/java/com/maya/fund_not_used/FundListing.java
-/Users/meshulam/JavaProjects/tase-standalone/tase/src/main/java/com/maya/fund_not_used/FundMeta.java
-/Users/meshulam/JavaProjects/tase-standalone/tase/src/main/java/com/maya/fund_not_used/FundRisk.java
 /Users/meshulam/JavaProjects/tase-standalone/tase/src/main/java/com/maya/jsondata/FundAsset.java
 /Users/meshulam/JavaProjects/tase-standalone/tase/src/main/java/com/maya/jsondata/FundAssetComposition.java
 /Users/meshulam/JavaProjects/tase-standalone/tase/src/main/java/com/maya/jsondata/FundDisclosure.java
@@ -36,9 +27,6 @@
 /Users/meshulam/JavaProjects/tase-standalone/tase/src/main/java/com/maya/requestclasses/MayaSecurityDataRequest.java
 /Users/meshulam/JavaProjects/tase-standalone/tase/src/main/java/com/maya/requestclasses/MayaSecurityDetailsRequest.java
 /Users/meshulam/JavaProjects/tase-standalone/tase/src/main/java/com/maya/requestclasses/MayaSecurityHistoricalRequest.java
-/Users/meshulam/JavaProjects/tase-standalone/tase/src/main/java/com/maya/security_not_used/SecurityHistory.java
-/Users/meshulam/JavaProjects/tase-standalone/tase/src/main/java/com/maya/security_not_used/SecurityHistoryEntry.java
-/Users/meshulam/JavaProjects/tase-standalone/tase/src/main/java/com/maya/security_not_used/SecurityListing.java
 /Users/meshulam/JavaProjects/tase-standalone/tase/src/main/java/com/maya/utils/BadExceptionResponse.java
 /Users/meshulam/JavaProjects/tase-standalone/tase/src/main/java/com/maya/utils/FullResponseBuilder.java
 /Users/meshulam/JavaProjects/tase-standalone/tase/src/main/java/com/maya/utils/GSONUtil.java

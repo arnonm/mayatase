@@ -1,9 +1,6 @@
 package com.maya.requestclasses;
 
 import java.time.LocalDate;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.*;
 import com.maya.utils.Utils.Language;
 
 public class MayaSecurityHistoricalRequest extends MayaSecurityBaseRequest {
