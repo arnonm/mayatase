@@ -20,5 +20,3 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn -B package --file tase/pom.xml
-    - name: Test
-      run: mvn -B test --file tase/pom.xml
