@@ -28,6 +28,7 @@ class AppTest {
 
 
     void testGetFundNamesStub() throws Exception{
+    	// This test is not implemented yet
          Logger logger = Logger.getLogger(App.class.getName());
         Maya maya = new Maya(logger, 1, false);
         String response = "{\"english_short_name\":\"KSM KTF (0A) Tel Gov\",\"english_long_name\":\"KSM KTF (0A) Tel Gov\",\"hebrew_short_name\":\"ק.ש.מ ק\"}";
@@ -59,6 +60,7 @@ class AppTest {
 
     
     void testGetSecurityDetailsHeb_Mock() throws Exception {
+    	// This test is not implemented yet
         Logger logger = Logger.getLogger(App.class.getName());
         Maya maya = Mockito.mock(Maya.class);
 
@@ -136,7 +138,7 @@ class AppTest {
         // System.out.println("Testing:: getDetails for Security");
         String fundId = "5113428";
         Map <String, Object> names = maya.getFundsDetails(fundId, Language.ENGLISH);
-        System.out.println(maya.getFundsDetails("5113428", Language.ENGLISH));
+//        System.out.println(maya.getFundsDetails("5113428", Language.ENGLISH));
 
         assertFalse(names.isEmpty(), "Details should not be empty");  
         assertInstanceOf(String.class, names.get("FundLongName"));
@@ -146,14 +148,26 @@ class AppTest {
         assertFalse(fundLongName.isEmpty(), "String should not be empty");
     }
 
-     void testGetFundDetailsHebrew() {
-            // This test is not implemented yet
-            // You can implement it later when you have the necessary details
-            System.out.println("This test is not implemented yet.");
-            // Assertions.fail("This test is not implemented yet.");
+     @Test
+     void testGetFundDetailsHebrew() throws Exception{
+    	 Logger logger = Logger.getLogger(App.class.getName());
+         Maya maya = new Maya(logger, 1, false);
+         
+         String fundId = "5113428";
+         Map <String, Object> names = maya.getFundsDetails(fundId, Language.HEBREW);
+         System.out.println(maya.getFundsDetails("5113428", Language.HEBREW));
+         
+         assertFalse(names.isEmpty(), "Details should not be empty");  
+         assertInstanceOf(String.class, names.get("FundLongName"));
+         
+         String fundLongName = names.get("ManagerLongName").toString();
+         assertEquals("קסם קרנות נאמנות בע\"מ", fundLongName);
+         assertNotNull(fundLongName, "String should not be null");
+         assertFalse(fundLongName.isEmpty(), "String should not be empty");
      }
 
      void testGetFundPriceHistory() throws Exception {
+    	// This test is not implemented yet
         Logger logger = Logger.getLogger(App.class.getName());
         Maya maya = new Maya(logger, 1, false);
         System.out.println("Testing:: getPriceHistory for Funds");
@@ -162,7 +176,8 @@ class AppTest {
      }
         
      void testGetSecurityPriceHistory() throws Exception {
-        Logger logger = Logger.getLogger(App.class.getName());
+    	// This test is not implemented yet
+    	Logger logger = Logger.getLogger(App.class.getName());
         Maya maya = new Maya(logger, 1, false);
         System.out.println("Testing:: getPriceHistory for Security");
         System.out.println(maya.getPriceHistoryChunk("1135912",LocalDate.of(2024,10,30), LocalDate.of(2024,10,31), 1, Language.ENGLISH ));
