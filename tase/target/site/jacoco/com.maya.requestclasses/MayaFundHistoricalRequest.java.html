@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MayaFundHistoricalRequest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tase</a> &gt; <a href="index.source.html" class="el_package">com.maya.requestclasses</a> &gt; <span class="el_source">MayaFundHistoricalRequest.java</span></div><h1>MayaFundHistoricalRequest.java</h1><pre class="source lang-java linenums">package com.maya.requestclasses;
+
+import java.time.LocalDate;
+
+import com.maya.utils.Utils.Language;
+
+public class  MayaFundHistoricalRequest extends MayaFundBaseRequest {
+
+    private static final String END_POINT = &quot;fund/history&quot;;
+    private static final String METHOD = &quot;POST&quot;;
+
+
+    public String getEndPoint() {
+<span class="nc" id="L14">        return END_POINT;</span>
+    }
+
+    public String getMethod() {
+<span class="nc" id="L18">        return METHOD;</span>
+    }
+
+    public String getBaseURL() {
+<span class="nc" id="L22">        return super.getMayaApiBaseUrl();</span>
+    }
+
+    // public void MayaFundHistoricalRequest(String securityId) {
+    //     LocalDate from_date = LocalDate.now();
+    //     LocalDate to_date = LocalDate.now();
+    //     MayaFundHistoricalRequest(securityId, from_date, to_date, 1, 0, Language.ENGLISH);
+    // }
+
+    public MayaFundHistoricalRequest(String securityId, LocalDate from_date, LocalDate to_date, 
+            int page, int period, Language lang) throws Exception
+    {
+<span class="nc" id="L34">        super(lang);</span>
+<span class="nc" id="L35">        this.headers.remove(&quot;Accept&quot;); // Not for fund</span>
+<span class="nc" id="L36">        this.headers.put(&quot;Content-Type&quot;, &quot;application/x-www-form-urlencoded&quot;);</span>
+<span class="nc" id="L37">        this.headers.replace(&quot;Host&quot;, &quot;mayaapi.tase.co.il&quot;);</span>
+
+<span class="nc" id="L39">        this.params.put(&quot;DateFrom&quot;, from_date.toString());</span>
+<span class="nc" id="L40">        this.params.put(&quot;DateTo&quot;, to_date.toString());</span>
+<span class="nc" id="L41">        this.params.put(&quot;FundId&quot;, securityId);</span>
+<span class="nc" id="L42">        this.params.put(&quot;Page&quot;, Integer.toString(page));</span>
+<span class="nc" id="L43">        this.params.put(&quot;Period&quot;, Integer.toString(period));</span>
+<span class="nc" id="L44">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

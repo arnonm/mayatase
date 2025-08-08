@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MayaFunds.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tase</a> &gt; <a href="index.source.html" class="el_package">com.maya</a> &gt; <span class="el_source">MayaFunds.java</span></div><h1>MayaFunds.java</h1><pre class="source lang-java linenums">package com.maya;
+
+import java.util.logging.Logger;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import com.maya.utils.Utils.Language;
+import com.maya.requestclasses.MayaFundDetailsRequest;
+import com.maya.requestclasses.MayaFundHistoricalRequest;
+import com.maya.jsondata.FundHistory;
+import com.maya.jsondata.FundListing;
+import com.maya.utils.GSONUtil;
+import com.maya.adapters.FundsLocalDateTimeAdapter;
+
+import java.lang.reflect.Type;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
+//import java.time.format.DateTimeFormatter;
+
+
+public class MayaFunds extends MayaBase{
+    
+    public static final  int TYPE=4;
+<span class="fc" id="L27">    private int period = 0;</span>
+    // private Type SecurityListingType = new TypeToken &lt;SecurityListing&gt;() {}.getType();
+<span class="fc" id="L29">    private Type FundListingType = new TypeToken &lt;FundListing&gt;() {}.getType();</span>
+    
+
+    public MayaFunds(Logger logger, int num_of_attempts, boolean verify) {
+<span class="fc" id="L33">        super(logger, num_of_attempts, verify);</span>
+<span class="fc" id="L34">    }</span>
+
+
+    public  Map&lt;String, String&gt; getNames(
+        FundListing englishDetails, FundListing hebrewDetails) 
+    {
+<span class="fc" id="L40">        Map&lt;String, String&gt;names = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L41">        this.logger.fine(&quot;MayaFunds::getNames&quot;);</span>
+<span class="fc" id="L42">        names.put(&quot;english_short_name&quot;, (String) englishDetails.FundLongName);</span>
+<span class="fc" id="L43">        names.put(&quot;english_long_name&quot;, (String) englishDetails.FundLongName);</span>
+<span class="fc" id="L44">        names.put(&quot;hebrew_short_name&quot;, (String) hebrewDetails.FundShortName);</span>
+<span class="fc" id="L45">        names.put(&quot;hebrew_long_name&quot;, (String) hebrewDetails.FundShortName);</span>
+<span class="fc" id="L46">        return names;</span>
+    }
+
+    
+    public FundListing getDetails(String securityId, Language lang) throws Exception{
+<span class="fc" id="L51">        this.logger.fine(&quot;MayaFunds::getDetails - before request&quot;);</span>
+<span class="fc" id="L52">        String responseString =  sendRequest(new MayaFundDetailsRequest(securityId, lang));</span>
+<span class="fc" id="L53">        Gson gson = new GsonBuilder()</span>
+<span class="fc" id="L54">            .registerTypeAdapter(LocalDateTime.class, new FundsLocalDateTimeAdapter())</span>
+<span class="fc" id="L55">            .create();</span>
+
+<span class="fc" id="L57">        FundListing listing  = gson.fromJson(responseString, FundListing.class);</span>
+<span class="fc" id="L58">        this.logger.fine(&quot;MayaFunds::getDetails - after request&quot;);</span>
+<span class="fc" id="L59">        return listing;</span>
+    }
+
+
+    public FundHistory getPriceHistoryChunk(
+        String securityId, LocalDate fromDate, LocalDate toDate, int page, Language lang) throws Exception {
+<span class="nc bnc" id="L65" title="All 2 branches missed.">            int _page = (page == 0) ? 1 : page ;</span>
+<span class="nc" id="L66">            String responseString = sendRequest(new MayaFundHistoricalRequest(securityId, fromDate, toDate, _page, period, lang));</span>
+<span class="nc" id="L67">            Gson gson = GSONUtil.createGson();</span>
+<span class="nc" id="L68">            FundHistory historyListing = gson.fromJson(responseString, FundHistory.class);</span>
+            //  return sendRequest(new MayaFundHistoricalRequest(securityId, fromDate, toDate, _page, period, lang));
+<span class="nc" id="L70">            return historyListing;</span>
+            
+    }
+
+    //public Stream&lt;Map&lt;String, Object&gt;&gt; getPriceHistory (
+    public FundHistory getPriceHistory (
+        String securityId, LocalDate fromDate, LocalDate toDate, int page, Language lang) throws Exception 
+    {
+<span class="nc bnc" id="L78" title="All 2 branches missed.">        if (toDate == null) {</span>
+<span class="nc" id="L79">            toDate = LocalDate.now();</span>
+        }
+<span class="nc bnc" id="L81" title="All 2 branches missed.">        if (fromDate == null) {</span>
+<span class="nc" id="L82">            fromDate = toDate.minusDays(1);</span>
+        }
+        // Map&lt;String, Object&gt; data = getPriceHistoryChunk(securityId, fromDate, toDate, _page, lang);
+<span class="nc" id="L85">        return getPriceHistoryChunk(securityId, fromDate, toDate, page, lang);</span>
+        // Map&lt;String, Object&gt; items = (Map&lt;String, Object&gt;) data.getOrDefault(&quot;Items&quot;, new ArrayList&lt;&gt;());
+        // return items.stream();
+        // return data;
+    }
+
+}
+
+
+
+/*
+ import java.util.*;
+import java.time.LocalDate;
+import java.util.stream.Stream;
+
+import pymaya.maya_base.MayaBase;
+import pymaya.request_classes.MayaFundDetailsRequest;
+import pymaya.request_classes.MayaHistoricalRequest;
+import pymaya.utils.Language;
+
+public class MayaFunds extends MayaBase {
+    public static final int TYPE = 4;
+
+    public static Map&lt;String, String&gt; getNames(Map&lt;String, Object&gt; englishDetails, Map&lt;String, Object&gt; hebrewDetails) {
+        Map&lt;String, String&gt; names = new HashMap&lt;&gt;();
+        names.put(&quot;english_short_name&quot;, (String) englishDetails.getOrDefault(&quot;FundLongName&quot;, &quot;&quot;));
+        names.put(&quot;english_long_name&quot;, (String) englishDetails.getOrDefault(&quot;FundLongName&quot;, &quot;&quot;));
+        names.put(&quot;hebrew_short_name&quot;, (String) hebrewDetails.getOrDefault(&quot;FundShortName&quot;, &quot;&quot;));
+        names.put(&quot;hebrew_long_name&quot;, (String) hebrewDetails.getOrDefault(&quot;FundLongName&quot;, &quot;&quot;));
+        return names;
+    }
+
+    public Map&lt;String, Object&gt; getDetails(String securityId, Language lang) {
+        return this.sendRequest(new MayaFundDetailsRequest(securityId, lang));
+    }
+
+    public Map&lt;String, Object&gt; getPriceHistoryChunk(String securityId, LocalDate fromDate, LocalDate toDate, int page, Language lang) {
+        return this.sendRequest(new MayaHistoricalRequest(securityId, fromDate, toDate, page, lang));
+    }
+
+    public Stream&lt;Map&lt;String, Object&gt;&gt; getPriceHistory(String securityId, LocalDate fromDate, LocalDate toDate, int page, Language lang) {
+        Map&lt;String, Object&gt; data = getPriceHistoryChunk(securityId, fromDate, toDate, page, lang);
+        List&lt;Map&lt;String, Object&gt;&gt; table = (List&lt;Map&lt;String, Object&gt;&gt;) data.getOrDefault(&quot;Table&quot;, new ArrayList&lt;&gt;());
+        return table.stream();
+    }
+
+    public Stream&lt;Map&lt;String, Object&gt;&gt; getPriceHistory(String securityId, LocalDate fromDate) {
+        return getPriceHistory(securityId, fromDate, LocalDate.now(), 1, Language.ENGLISH);
+    }
+
+    public Stream&lt;Map&lt;String, Object&gt;&gt; getPriceHistory(String securityId, LocalDate fromDate, LocalDate toDate) {
+        return getPriceHistory(securityId, fromDate, toDate, 1, Language.ENGLISH);
+    }
+
+    public Stream&lt;Map&lt;String, Object&gt;&gt; getPriceHistory(String securityId, LocalDate fromDate, LocalDate toDate, int page) {
+        return getPriceHistory(securityId, fromDate, toDate, page, Language.ENGLISH);
+    }
+}
+
+
+*/
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

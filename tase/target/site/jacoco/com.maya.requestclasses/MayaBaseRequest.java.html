@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MayaBaseRequest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tase</a> &gt; <a href="index.source.html" class="el_package">com.maya.requestclasses</a> &gt; <span class="el_source">MayaBaseRequest.java</span></div><h1>MayaBaseRequest.java</h1><pre class="source lang-java linenums">package com.maya.requestclasses;
+
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Logger;
+
+import com.maya.utils.ParameterStringBuilder;
+
+public abstract class MayaBaseRequest {
+    private final static String REFERER_URL = &quot;https://www.tase.co.il/&quot;;
+    private final static String HOST = &quot;api.tase.co.il&quot;;
+    private final static String USER_AGENT = &quot;Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; FSL 7.0.6.01001)&quot;;
+
+    protected Logger logger;
+<span class="fc" id="L20">    protected Map&lt;String, String&gt; headers = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L21">    protected Map&lt;String, String&gt; params = new HashMap&lt;&gt;();</span>
+    protected String URLParameters;
+    protected String POSTParameters;
+    public HttpURLConnection conn;
+
+<span class="fc" id="L26">    public MayaBaseRequest(Object... args) throws IOException {</span>
+        // URL url = new URL(getUrl());
+        // System.out.println(&quot;in MayaBaseRequest. URL &quot;+url);
+        // System.out.println(&quot;in MayaBaseRequest. opening connection&quot;);
+        // request = (HttpURLConnection) url.openConnection();
+
+<span class="pc bpc" id="L32" title="1 of 2 branches missed.">        this.logger = (logger == null) ? Logger.getLogger(this.getClass().getName()) : logger;</span>
+<span class="fc" id="L33">        this.URLParameters = &quot;&quot;;</span>
+<span class="fc" id="L34">        this.headers.put(&quot;Accept&quot;, &quot;*/*&quot;); // Not for fund</span>
+<span class="fc" id="L35">        this.headers.put(&quot;Cache-Control&quot;, &quot;no-cache&quot;);</span>
+<span class="fc" id="L36">        this.headers.put(&quot;referer&quot;, REFERER_URL);</span>
+<span class="fc" id="L37">        this.headers.put(&quot;User-Agent&quot;, USER_AGENT);</span>
+<span class="fc" id="L38">        this.headers.put(&quot;Host&quot;, HOST);</span>
+
+        // System.out.println(&quot;Headers &quot;+ headers);
+<span class="fc" id="L41">    }</span>
+
+    protected abstract String getMayaApiBaseUrl();
+
+    protected abstract String getEndPoint();
+
+    public abstract String getMethod();
+
+    public String getURLParameters() {
+<span class="fc" id="L50">        return this.URLParameters;</span>
+    };
+
+    public void disconnect() {
+<span class="fc" id="L54">        this.conn.disconnect();</span>
+<span class="fc" id="L55">    }</span>
+
+    public String getUrl() {
+<span class="fc" id="L58">        return getMayaApiBaseUrl() + getEndPoint() + getURLParameters();</span>
+    }
+
+
+    public HttpURLConnection prepare() throws Exception {
+        // System.setProperty(&quot;sun.net.http.allowRestrictedHeaders&quot;, &quot;true&quot;);
+<span class="fc" id="L64">        setExtendedURL();</span>
+        
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">        if (getMethod() == &quot;POST&quot;) {</span>
+<span class="nc" id="L67">            this.POSTParameters = ParameterStringBuilder.getParamsString(this.params);</span>
+<span class="nc" id="L68">            this.headers.put(&quot;Content-Length&quot;, String.valueOf(this.POSTParameters.length()));</span>
+        }
+
+<span class="pc bpc" id="L71" title="3 of 4 branches missed.">        if (getMethod() == &quot;POST&quot; &amp;&amp; getEndPoint() == &quot;security/historyeod&quot;) {</span>
+<span class="nc" id="L72">            this.POSTParameters = ParameterStringBuilder.postJsonParamsString(this.params);</span>
+<span class="nc" id="L73">            this.headers.put(&quot;Content-Length&quot;, String.valueOf(this.POSTParameters.length()));</span>
+        }
+<span class="fc" id="L75">        URL url = new URL(this.getUrl());</span>
+<span class="fc" id="L76">        logger.fine(&quot;MayaBaseRequest::prepare - URL &quot; + this.getUrl());</span>
+
+<span class="fc" id="L78">        this.conn =  (HttpURLConnection)  url.openConnection();</span>
+<span class="fc" id="L79">        setHeaders();</span>
+<span class="fc" id="L80">        this.conn.setRequestMethod(getMethod());</span>
+
+<span class="fc" id="L82">        setPOSTParameters();</span>
+        // Syste m.out.println(getMethod() + &quot; &quot; + request.getURL());
+        // System.out.println(request.getRequestProperties());
+        // Show Headfers
+<span class="fc" id="L86">        printRequestDetails();</span>
+<span class="fc" id="L87">        return this.conn;</span>
+
+    }
+
+    private void setExtendedURL() throws Exception {
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">        if (this.getMethod() == &quot;GET&quot;) {</span>
+<span class="fc" id="L93">            String tempParams = com.maya.utils.ParameterStringBuilder.getParamsString(this.params);</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">            if (tempParams.length() &gt; 0) {</span>
+<span class="fc" id="L95">                this.URLParameters = &quot;?&quot; + tempParams;</span>
+            }
+        }
+<span class="fc" id="L98">    }</span>
+
+    public void setPOSTParameters() throws IOException {    
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">        if (this.getMethod() == &quot;POST&quot;) {</span>
+<span class="nc" id="L102">            logger.fine(&quot;POST setParameters&quot;);</span>
+<span class="nc" id="L103">            this.conn.setDoOutput(true);</span>
+            // this.conn.setDoInput(true);
+            try {
+<span class="nc" id="L106">                DataOutputStream out = new DataOutputStream(this.conn.getOutputStream());</span>
+<span class="nc" id="L107">                logger.fine(&quot;Post parameters &quot; + this.POSTParameters);</span>
+<span class="nc" id="L108">                out.write(this.POSTParameters.getBytes(&quot;UTF-8&quot;));</span>
+<span class="nc" id="L109">                out.flush();</span>
+<span class="nc" id="L110">                out.close();</span>
+
+
+<span class="nc" id="L113">            } catch (IOException e) {</span>
+<span class="nc" id="L114">                logger.warning(e.getMessage());</span>
+<span class="nc" id="L115">                throw e;</span>
+<span class="nc" id="L116">            }</span>
+        }
+<span class="fc" id="L118">    }</span>
+
+    public void setHeaders() {
+<span class="fc bfc" id="L121" title="All 2 branches covered.">        for (Map.Entry&lt;String, String&gt; entry : this.headers.entrySet()) {</span>
+<span class="fc" id="L122">            logger.fine(&quot;MayaBaseRequest::setHeaders - set Request &quot; +</span>
+<span class="fc" id="L123">                entry.getKey() + &quot;: &quot; + entry.getValue());</span>
+<span class="fc" id="L124">            this.conn.setRequestProperty(entry.getKey(), entry.getValue());</span>
+<span class="fc" id="L125">        }</span>
+<span class="fc" id="L126">        logger.fine(&quot;MayaBaseRequest::setHeaders - &quot; +</span>
+<span class="fc" id="L127">           this.conn.getRequestProperties());</span>
+<span class="fc" id="L128">    }</span>
+
+
+    private void printRequestDetails() {
+<span class="fc" id="L132">        logger.fine(&quot;MayaBaseRequest::printRequestDetails - URL &quot; +</span>
+<span class="fc" id="L133">        this.getUrl());</span>
+<span class="fc" id="L134">        logger.fine(&quot;MayaBaseRequest::printRequestDetails - URL &quot; +</span>
+<span class="fc" id="L135">        this.conn.getURL());</span>
+<span class="fc" id="L136">        logger.fine(&quot;MayaBaseRequest::printRequestDetails - RequestMethod &quot; +</span>
+<span class="fc" id="L137">        this.conn.getRequestMethod());</span>
+
+<span class="fc" id="L139">        logger.fine(&quot;MayaBaseRequest::printRequestDetails - Headers:&quot;);</span>
+        try {
+<span class="fc" id="L141">            logger.fine(this.conn.getRequestProperties().toString());</span>
+<span class="nc" id="L142">        } catch (Exception e) {</span>
+<span class="fc" id="L143">        }</span>
+<span class="fc" id="L144">        logger.fine(&quot;MayaBaseRequest::printRequestDetails - ContentType - &quot; +</span>
+<span class="fc" id="L145">            this.conn.getContentType());</span>
+<span class="fc" id="L146">    }</span>
+
+}
+
+/*
+ * import java.net.URL;
+ * import java.net.MalformedURLException;
+ * import org.apache.http.client.methods.HttpRequestBase;
+ * import org.apache.http.client.methods.HttpGet;
+ * import org.apache.http.client.methods.HttpPost;
+ * import org.apache.http.client.utils.URIBuilder;
+ * 
+ * public abstract class MayaBaseRequest {
+ * protected HttpRequestBase request;
+ * 
+ * public MayaBaseRequest(Object... args) throws MalformedURLException {
+ * this.conn = createRequest();
+ * this.conn.addHeader(&quot;Cache-Control&quot;, &quot;no-cache&quot;);
+ * this.conn.addHeader(&quot;referer&quot;, &quot;https://www.tase.co.il/&quot;);
+ * this.conn.addHeader(&quot;User-Agent&quot;,
+ * &quot;Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; FSL 7.0.6.01001)&quot;);
+ * }
+ * 
+ * protected abstract String getMayaApiBaseUrl();
+ * 
+ * protected abstract String getEndPoint();
+ * 
+ * protected abstract String getMethod();
+ * 
+ * protected HttpRequestBase createRequest() {
+ * if (&quot;GET&quot;.equalsIgnoreCase(getMethod())) {
+ * return new HttpGet();
+ * } else if (&quot;POST&quot;.equalsIgnoreCase(getMethod())) {
+ * return new HttpPost();
+ * }
+ * throw new IllegalArgumentException(&quot;Unsupported HTTP method: &quot; +
+ * getMethod());
+ * }
+ * 
+ * protected String getUrl() throws MalformedURLException {
+ * return new URL(new URL(getMayaApiBaseUrl()), getEndPoint()).toString();
+ * }
+ * 
+ * public HttpRequestBase prepare() throws Exception {
+ * URIBuilder uriBuilder = new URIBuilder(getUrl());
+ * request.setURI(uriBuilder.build());
+ * 
+ * System.out.println();
+ * System.out.println(getMethod() + &quot; &quot; + request.getURI());
+ * System.out.println(uriBuilder.getQueryParams());
+ * // Note: In Java, you'd need to handle request body differently for POST
+ * requests
+ * System.out.println(request.getEntity());
+ * System.out.println(request.getAllHeaders());
+ * 
+ * return request;
+ * }
+ * }
+ * 
+ * 
+ */
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

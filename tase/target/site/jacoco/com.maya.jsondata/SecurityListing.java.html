@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SecurityListing.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tase</a> &gt; <a href="index.source.html" class="el_package">com.maya.jsondata</a> &gt; <span class="el_source">SecurityListing.java</span></div><h1>SecurityListing.java</h1><pre class="source lang-java linenums">package com.maya.jsondata;
+
+import java.util.Map;
+import java.util.HashMap;
+import java.lang.reflect.Field;
+
+public class SecurityListing {
+
+    public String Id;
+    public String Name;
+    private String Smb;
+    public String ISIN;
+    public String Type;
+    public int SubType;
+    String SubTypeDesc;
+    public String SubId;
+    private String ETFType;
+    private String BaseRate;
+    private String HighRate;
+    private String LowRate;
+    private String OpenRate;
+    private String InDay;
+    private String ShareType;
+    private String TradeDataLink;
+    private String EODTradeDate;
+    private String TurnOverValueShekel;
+    private String TurnOverValue;
+    private String MarketValue;
+    private String CompanyName;
+    public String FullBranch;
+    private String CUSIP;
+    private String RegisteredCapital;
+    private String Exe;
+    private String ExeDesc;
+    private String ForeignMarket;
+    private String MinimumVolume;
+    private String MinimumVolumeBlock;
+    private String DealsNo;
+    private String OverallTurnOverUnits;
+    private String MonthYield;
+    private String AnnualYield;
+    private String AdjustmentCoefficient;
+    private String BrutoYield;
+    private String RedemptionDate;
+    private String Linkage;
+    private String AnnualInterest;
+    private String KeepStatus;
+    private String KeepStatusDate;
+    private String SuspendStatus;
+    private String SuspendStatusDate;
+    private String IndexNumber;
+    private String IndexCategoryType;
+    private String UAssetName;
+    private String UAssetValue;
+    private String Symbol;
+    private String DealTime;
+    private String PointsChange;
+    private String ISIN_ID;
+    private String DaysUntilRedemption;
+    private String BaseIndices;
+    private String BaseIndicesDate;
+    private String CompanyLogo;
+    private String LastDealTime;
+    public boolean IsForeignETF;
+    private String ExchangeDate;
+    private String LastStrikeDate;
+    private String LinkageType;
+    private String ExcessivePrice;
+    private String ExcessivePriceCurrency;
+    private String CurrentExcessivePrice;
+    private String StrikeShareRate;
+    private String ExchangeShareName;
+    private String ExchangeShareId;
+    private String ExchangeShareISIN;
+    private String StrikeShareName;
+    private String ExchangeShareRate;
+    private String ExchangeRateType;
+    private String ExchangeRelation;
+    private String NoSharesFromOption;
+    public boolean isTrading;
+    private String LongName;
+    private String CorporateNo;
+    private String Classification_Super;
+    private String Classification_Primary;
+    private String Classification_Secondary;
+    private String Directive;
+    private String StockExchanges;
+    private String Currencies;
+    private String Prospectus;
+    private String Appendix;
+    private String AdditionalDocs;
+    private String RepresetativeDetails;
+    public String CompanyId;
+    private String SecuritySubType;
+    private String TradeDate;
+    private String TradeTime;
+    private String LastRate;
+    private String Change;
+    private String TradingStage;
+    private String TradingStageDesc;
+    private String TradingStageMob;
+    private String[] GreenIndicators;
+    private String[] RedIndicators;
+    private String SecurityTypeInSite;
+    private String ETFTypeInSite;
+    public String SecurityLongName;
+    public boolean IsTASEUP;
+    public boolean AllowTasePlus;
+    public boolean HasOfferingPrice;
+    private String BlockMonetaryTurnOver;
+    private String BlockDealTime;
+
+
+<span class="nc" id="L114">    public SecurityListing( String Name,  String Smb, String ISIN, String Type, int SubType ) {</span>
+<span class="nc" id="L115">      this.Name = Name;</span>
+<span class="nc" id="L116">      this.Smb = Smb;</span>
+<span class="nc" id="L117">      this.ISIN = ISIN;</span>
+<span class="nc" id="L118">      this.Type = Type;</span>
+<span class="nc" id="L119">      this.SubType = SubType;</span>
+<span class="nc" id="L120">    }</span>
+
+    public String getOrDefault(String var1, String var2) {
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">        return (var1 == null) ? var2 : &quot;&quot;;</span>
+     }
+
+     public Map&lt;String, String&gt; toMap() {
+<span class="nc" id="L127">      Map&lt;String, String&gt; map = parameters(this);</span>
+<span class="nc" id="L128">      return map;</span>
+   }
+
+   private static Map&lt;String, String&gt; parameters(Object obj) {
+<span class="nc" id="L132">      Map&lt;String, String&gt; map = new HashMap&lt;&gt;();</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">      for (Field field: obj.getClass().getDeclaredFields()) {</span>
+<span class="nc" id="L134">          field.setAccessible(true);</span>
+          try {
+<span class="nc" id="L136">              map.put(field.getName(), field.get(obj).toString());</span>
+<span class="nc" id="L137">          } catch (Exception e){</span>
+
+<span class="nc" id="L139">          }</span>
+      }
+<span class="nc" id="L141">      return map;</span>
+   }
+     public String toString() {
+<span class="nc" id="L144">        String newLine = System.getProperty(&quot;line.separator&quot;);</span>
+<span class="nc" id="L145">        String listing = &quot;Id: &quot;+ Id + newLine;</span>
+<span class="nc" id="L146">        listing += &quot;Name: &quot;+ Name + newLine;</span>
+<span class="nc" id="L147">        listing += &quot;Smb: &quot; + Smb + newLine;</span>
+<span class="nc" id="L148">        listing += &quot;ISIN &quot; + ISIN + newLine;</span>
+<span class="nc" id="L149">        listing += &quot;Type &quot; + Type + newLine;</span>
+<span class="nc" id="L150">        listing += &quot;SubType &quot; + SubType + newLine;</span>
+<span class="nc" id="L151">        listing += &quot;SubTypeDesc &quot; + SubTypeDesc + newLine;</span>
+<span class="nc" id="L152">        listing += &quot;SubId &quot; + SubId + newLine;</span>
+<span class="nc" id="L153">        listing += &quot;ETFType &quot; + ETFType + newLine;</span>
+<span class="nc" id="L154">        return listing; </span>
+     }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

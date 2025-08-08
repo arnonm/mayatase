@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GSONUtil.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tase</a> &gt; <a href="index.source.html" class="el_package">com.maya.utils</a> &gt; <span class="el_source">GSONUtil.java</span></div><h1>GSONUtil.java</h1><pre class="source lang-java linenums">package com.maya.utils;
+
+import java.lang.reflect.Type;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonPrimitive;
+
+import com.maya.adapters.FundsLocalDateAdapter;
+import com.maya.adapters.FundsLocalDateTimeAdapter;
+
+
+public final class GSONUtil {
+
+    private GSONUtil() {
+    }
+
+    public static Gson createGson() {
+
+        // @formatter:off
+<span class="fc" id="L32">        return new GsonBuilder()</span>
+<span class="fc" id="L33">                .registerTypeAdapter(Map.class, createMapDeserializer())</span>
+<span class="fc" id="L34">                .registerTypeAdapter(List.class, createListDeserializer())</span>
+<span class="fc" id="L35">                .registerTypeAdapter(LocalDateTime.class, new FundsLocalDateTimeAdapter())</span>
+<span class="fc" id="L36">                .registerTypeAdapter(LocalDate.class, new FundsLocalDateAdapter())</span>
+<span class="fc" id="L37">                .create();</span>
+        // @formatter:on
+    }
+
+    private static JsonDeserializer&lt;Map&lt;String, Object&gt;&gt; createMapDeserializer() {
+<span class="fc" id="L42">        return new JsonDeserializer&lt;Map&lt;String, Object&gt;&gt;() {</span>
+
+            @Override
+            public Map&lt;String, Object&gt; deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+                    throws JsonParseException {
+
+<span class="fc" id="L48">                return json.getAsJsonObject().entrySet().stream() // stream</span>
+<span class="fc" id="L49">                        .collect(Collectors.toMap(Entry::getKey, (e) -&gt; GSONUtil.deserialize(e.getValue(), context)));</span>
+            }
+        };
+    }
+
+    private static JsonDeserializer&lt;List&lt;Object&gt;&gt;   createListDeserializer() {
+<span class="fc" id="L55">        return new JsonDeserializer&lt;List&lt;Object&gt;&gt;() {</span>
+
+            @Override
+            public List&lt;Object&gt; deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+                    throws JsonParseException {
+
+<span class="fc" id="L61">                return StreamSupport.stream(json.getAsJsonArray().spliterator(), false) // stream</span>
+<span class="fc" id="L62">                        .map((e) -&gt; GSONUtil.deserialize(e, context)).collect(Collectors.toList());</span>
+            }
+        };
+    }
+
+    private static Object deserialize(JsonElement value, JsonDeserializationContext context) {
+
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">        if (value.isJsonNull()) {</span>
+<span class="nc" id="L70">            return null;</span>
+        }
+<span class="fc bfc" id="L72" title="All 2 branches covered.">        if (value.isJsonObject()) {</span>
+<span class="fc" id="L73">            return context.deserialize(value, Map.class);</span>
+        }
+<span class="fc bfc" id="L75" title="All 2 branches covered.">        if (value.isJsonArray()) {</span>
+<span class="fc" id="L76">            return context.deserialize(value, List.class);</span>
+        }
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">        if (value.isJsonPrimitive()) {</span>
+<span class="fc" id="L79">            return parsePrimitive(value);</span>
+        }
+
+
+<span class="nc" id="L83">        throw new IllegalStateException(&quot;This exception should never be thrown!&quot;);</span>
+    }
+
+    private static Object parsePrimitive(JsonElement value) {
+
+<span class="fc" id="L88">        final JsonPrimitive jsonPrimitive = value.getAsJsonPrimitive();</span>
+
+<span class="fc bfc" id="L90" title="All 2 branches covered.">        if (jsonPrimitive.isString()) {</span>
+<span class="fc" id="L91">            return jsonPrimitive.getAsString();</span>
+        }
+
+<span class="fc bfc" id="L94" title="All 2 branches covered.">        if (jsonPrimitive.isBoolean()) {</span>
+<span class="fc" id="L95">            return jsonPrimitive.getAsBoolean();</span>
+        }
+
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">        if (jsonPrimitive.isNumber()) {</span>
+<span class="fc" id="L99">            return parseNumber(jsonPrimitive);</span>
+        }
+
+<span class="nc" id="L102">        throw new IllegalStateException(&quot;This exception should never be thrown!&quot;);</span>
+    }
+
+    private static Number parseNumber(JsonPrimitive jsonPrimitive) {
+
+<span class="fc bfc" id="L107" title="All 2 branches covered.">        if (isInteger(jsonPrimitive)) {</span>
+<span class="fc" id="L108">            return jsonPrimitive.getAsLong();</span>
+        }
+
+<span class="fc" id="L111">        return jsonPrimitive.getAsDouble();</span>
+    }
+
+    private static boolean isInteger(final JsonPrimitive jsonPrimitive) {
+<span class="fc" id="L115">        return jsonPrimitive.getAsString().matches(&quot;[-]?\\d+&quot;);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

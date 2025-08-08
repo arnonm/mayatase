@@ -1,0 +1,134 @@
+package com.maya;
+
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
+import java.beans.Transient;
+import java.io.IOException;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.logging.*;
+
+import  org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+
+import com.maya.utils.Utils.Language;
+
+/**
+ * Unit test for simple App.
+ */
+class AppTest {
+    /**
+     * Rigorous Test.
+     */
+    @Test
+    void testApp() {
+        assertEquals(1, 1);
+    }
+
+
+    void testGetFundNamesStub() throws Exception{
+         Logger logger = Logger.getLogger(App.class.getName());
+        Maya maya = new Maya(logger, 1, false);
+        String response = "{\"english_short_name\":\"KSM KTF (0A) Tel Gov\",\"english_long_name\":\"KSM KTF (0A) Tel Gov\",\"hebrew_short_name\":\"ק.ש.מ ק\"}";
+        String securityId = "123456";
+
+        Map<String, String> names = Mockito.spy(new HashMap<>());
+        Mockito.doReturn(response).when(maya).getNames(securityId);
+
+        Map <String, String> realnames = maya.getNames(securityId);
+
+        assertEquals("KSM KTF (0A) Tel Gov", names.get("english_short_name"));
+        assertInstanceOf(String.class, names.get("english_long_name"));
+        assertNotNull(names.get("english_long_name"), "String should not be null");
+        assertFalse(names.get("english_long_name").isEmpty(), "String should not be empty");
+        System.out.println("Testing:: after GetNames - " + names);
+    }
+
+    @Test
+    void testGetFundNamesLive() throws Exception{
+        Logger logger = Logger.getLogger(App.class.getName());
+        Maya maya = new Maya(logger, 1, false);
+        System.out.println("Testing:: getNames for Funds");
+        Map <String, String> names = maya.getNames("5113428");
+        assertEquals("KSM KTF (0A) Tel Gov", names.get("english_short_name"));
+        assertInstanceOf(String.class, names.get("english_long_name"));
+        assertNotNull(names.get("english_long_name"), "String should not be null");
+        assertFalse(names.get("english_long_name").isEmpty(), "String should not be empty");
+        System.out.println("Testing:: after GetNames - " + names);
+    }
+
+    @Test 
+    void testGetSecurityNameLive() throws Exception {
+
+        Logger logger = Logger.getLogger(App.class.getName());
+        Maya maya = new Maya(logger, 1, false);
+        System.out.println("Testing:: getNames for Security");
+        
+        Map <String, String> names = maya.getNames("1135912");
+        
+        assertEquals("ILCPI % 1025", names.get("english_short_name"));
+        System.out.println("Testing:: after GetNames - " + names);  
+        assertInstanceOf(String.class, names.get("english_long_name"));
+        assertNotNull(names.get("english_long_name"), "String should not be null");
+        assertTrue(names.get("english_long_name").isEmpty(), "String should not be empty");
+
+    }
+
+    @Test 
+    void testGetSecurityDetailsEnglish() throws Exception {
+        Logger logger = Logger.getLogger(App.class.getName());
+        Maya maya = new Maya(logger, 1, false);
+        String response = "{\"Id\":\"01135912\",\"Name\":\"ILCPI % 1025\",\"ISIN\":\"IL0011359127\",\"Type\":\" Government Bonds\",\"SubType\":0,\"BaseRate\":\"118.52\",\"HighRate\":\"118.55\",\"LowRate\":\"118.42\",\"OpenRate\":\"118.50\",\"InDay\":\"0\",\"ShareType\":\"0406\",\"EODTradeDate\":\"07/08/2025\",\"TurnOverValueShekel\":\"57322576.00\",\"MarketValue\":\"13101491\",\"CompanyName\":\"GALIL\",\"FullBranch\":\"\",\"CUSIP\":\"\",\"RegisteredCapital\":\"11055177366\",\"Exe\":\"\",\"ExeDesc\":\"\",\"ForeignMarket\":\"\",\"MinimumVolume\":\"8400\",\"MinimumVolumeBlock\":\"0\",\"DealsNo\":\"93\",\"OverallTurnOverUnits\":\"48372035\",\"MonthYield\":\"0.0\",\"AnnualYield\":\"2.9\",\"BrutoYield\":\"0.00\",\"RedemptionDate\":\"31/10/2025\",\"Linkage\":\"CPI\",\"AnnualInterest\":\"0.75000\",\"KeepStatusDate\":\"\",\"SuspendStatusDate\":\"\",\"IndexNumber\":\"\",\"IndexCategoryType\":\"\",\"UAssetName\":\"\",\"Symbol\":\"CPI1025\",\"PointsChange\":\"-0.01\",\"DaysUntilRedemption\":\"84\",\"BaseIndices\":\"99.6000000\",\"BaseIndicesDate\":\"15/06/2015\",\"CompanyLogo\":\"\",\"LastDealTime\":\"EoD\",\"IsForeignETF\":false,\"ExchangeDate\":\"\",\"LinkageType\":\"\",\"ExcessivePriceCurrency\":\"\",\"ExchangeShareName\":\"\",\"StrikeShareName\":\"\",\"ExchangeShareRate\":\"\",\"ExchangeRateType\":\"\",\"ExchangeRelation\":\"\",\"isTrading\":false,\"CompanyId\":\"954\",\"SecuritySubType\":\"Government bond - \\\"GALIL\\\"\",\"TradeDate\":\"07/08/2025\",\"TradeTime\":\"\",\"LastRate\":\"118.51\",\"Change\":\"-0.01\",\"GreenIndicators\":[],\"RedIndicators\":[],\"SecurityTypeInSite\":\"5\",\"ETFTypeInSite\":\"0\",\"SecurityLongName\":\"BANK OF ISRAEL - GALIL\",\"IsTASEUP\":false,\"AllowTasePlus\":true,\"HasOfferingPrice\":false,\"BlockDealTime\":\"EoD\"}";
+
+        System.out.println("Testing:: getDetails for Security");
+        String securityId = "1135912";
+        Map <String, Object> details = maya.getSecurityDetails(securityId, Language.ENGLISH);
+        assertFalse(details.isEmpty(), "Details should not be empty");  
+        assertNotNull(details.get("HighRate"), "HighRate should not be empty");  
+        assertInstanceOf(String.class, details.get("HighRate"));  
+        assertEquals("ILCPI % 1025", details.get("Name"));
+
+    }
+
+    @Test 
+    void testGetSecurityDetailsHeb() throws Exception {
+        Logger logger = Logger.getLogger(App.class.getName());
+        Maya maya = new Maya(logger, 1, false);
+        String response = "{\"Id\":\"01135912\",\"Name\":\"ILCPI % 1025\",\"ISIN\":\"IL0011359127\",\"Type\":\" Government Bonds\",\"SubType\":0,\"BaseRate\":\"118.52\",\"HighRate\":\"118.55\",\"LowRate\":\"118.42\",\"OpenRate\":\"118.50\",\"InDay\":\"0\",\"ShareType\":\"0406\",\"EODTradeDate\":\"07/08/2025\",\"TurnOverValueShekel\":\"57322576.00\",\"MarketValue\":\"13101491\",\"CompanyName\":\"GALIL\",\"FullBranch\":\"\",\"CUSIP\":\"\",\"RegisteredCapital\":\"11055177366\",\"Exe\":\"\",\"ExeDesc\":\"\",\"ForeignMarket\":\"\",\"MinimumVolume\":\"8400\",\"MinimumVolumeBlock\":\"0\",\"DealsNo\":\"93\",\"OverallTurnOverUnits\":\"48372035\",\"MonthYield\":\"0.0\",\"AnnualYield\":\"2.9\",\"BrutoYield\":\"0.00\",\"RedemptionDate\":\"31/10/2025\",\"Linkage\":\"CPI\",\"AnnualInterest\":\"0.75000\",\"KeepStatusDate\":\"\",\"SuspendStatusDate\":\"\",\"IndexNumber\":\"\",\"IndexCategoryType\":\"\",\"UAssetName\":\"\",\"Symbol\":\"CPI1025\",\"PointsChange\":\"-0.01\",\"DaysUntilRedemption\":\"84\",\"BaseIndices\":\"99.6000000\",\"BaseIndicesDate\":\"15/06/2015\",\"CompanyLogo\":\"\",\"LastDealTime\":\"EoD\",\"IsForeignETF\":false,\"ExchangeDate\":\"\",\"LinkageType\":\"\",\"ExcessivePriceCurrency\":\"\",\"ExchangeShareName\":\"\",\"StrikeShareName\":\"\",\"ExchangeShareRate\":\"\",\"ExchangeRateType\":\"\",\"ExchangeRelation\":\"\",\"isTrading\":false,\"CompanyId\":\"954\",\"SecuritySubType\":\"Government bond - \\\"GALIL\\\"\",\"TradeDate\":\"07/08/2025\",\"TradeTime\":\"\",\"LastRate\":\"118.51\",\"Change\":\"-0.01\",\"GreenIndicators\":[],\"RedIndicators\":[],\"SecurityTypeInSite\":\"5\",\"ETFTypeInSite\":\"0\",\"SecurityLongName\":\"BANK OF ISRAEL - GALIL\",\"IsTASEUP\":false,\"AllowTasePlus\":true,\"HasOfferingPrice\":false,\"BlockDealTime\":\"EoD\"}";
+
+        System.out.println("Testing:: getDetails for Security");
+        String securityId = "1135912";
+        Map <String, Object> details = maya.getSecurityDetails(securityId, Language.HEBREW);
+        assertFalse(details.isEmpty(), "Details should not be empty");  
+        assertNotNull(details.get("HighRate"), "HighRate should not be empty");  
+        assertInstanceOf(String.class, details.get("HighRate"));  
+        assertEquals("ממשל צמודה 1025", details.get("Name"));
+
+    }
+
+    void testGetFundDetailsEnglish() throws Exception {
+        Logger logger = Logger.getLogger(App.class.getName());
+        Maya maya = new Maya(logger, 1, false);
+        String response = "{english_short_name=KSM KTF (0A) Tel Gov, english_long_name=KSM KTF (0A) Tel Gov, hebrew_short_name=קסם KTF תל גוב- כללי, hebrew_long_name=קסם KTF תל גוב- כללי}";
+
+        System.out.println("Testing:: getDetails for Security");
+        String fundId = "5113428";
+        Map <String, Object> names = maya.getFundsDetails(fundId, Language.ENGLISH);
+        System.out.println(maya.getFundsDetails("5113428", Language.ENGLISH));
+
+        assertFalse(names.isEmpty(), "Details should not be empty");  
+        // assertNotNull(details.get("HighRate"), "HighRate should not be empty");  
+        // assertInstanceOf(String.class, details.get("HighRate"));  
+        assertEquals("KSM KTF (0A) Tel Gov", names.get("english_short_name"));
+        assertInstanceOf(String.class, names.get("english_long_name"));
+        assertNotNull(names.get("english_long_name"), "String should not be null");
+        // assertTrue(names.get("english_long_name").isEmpty(), "String should not be empty");
+    }
+
+
+}
