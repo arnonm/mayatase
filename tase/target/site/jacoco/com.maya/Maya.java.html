@@ -41,9 +41,9 @@ public class Maya {
 
         try {
 <span class="fc" id="L43">            this.mapSecurities();</span>
-<span class="pc" id="L44">        } catch (Exception e) {</span>
+<span class="nc" id="L44">        } catch (Exception e) {</span>
 <span class="nc" id="L45">            logger.severe(&quot;&quot;);</span>
-        }
+<span class="fc" id="L46">        }</span>
 <span class="fc" id="L47">    }</span>
 
     public Maya() {
@@ -65,7 +65,7 @@ public class Maya {
 <span class="fc" id="L65">            String id = listing.Id;</span>
 <span class="fc" id="L66">            String type =listing.Type;</span>
 <span class="fc" id="L67">            mappedSecurities.computeIfAbsent(id, k-&gt; new HashSet&lt;&gt;()).add(type);</span>
-        }
+<span class="fc" id="L68">        }</span>
 <span class="fc" id="L69">    }</span>
 
     private Object getMayaClass(String securityId) {
@@ -114,11 +114,11 @@ public class Maya {
     }
 
     private Map&lt;String, Object&gt; HistoryToMap(Object listing) {
-<span class="nc" id="L117">        Gson gson = GSONUtil.createGson();</span>
-<span class="nc" id="L118">        String json = gson.toJson(listing);</span>
-<span class="nc" id="L119">        logger.fine(&quot;JSON &quot;+json);</span>
-<span class="nc" id="L120">        Map&lt;String, Object&gt; map = gson.fromJson(json, new TypeToken&lt;Map&lt;String, Object&gt;&gt;() {}.getType());</span>
-<span class="nc" id="L121">        return map;</span>
+<span class="fc" id="L117">        Gson gson = GSONUtil.createGson();</span>
+<span class="fc" id="L118">        String json = gson.toJson(listing);</span>
+<span class="fc" id="L119">        logger.fine(&quot;JSON &quot;+json);</span>
+<span class="fc" id="L120">        Map&lt;String, Object&gt; map = gson.fromJson(json, new TypeToken&lt;Map&lt;String, Object&gt;&gt;() {}.getType());</span>
+<span class="fc" id="L121">        return map;</span>
 
     }
     public Map&lt;String, Object&gt; getFundsDetails(String securityId, Language lang) throws Exception {
@@ -155,16 +155,16 @@ public class Maya {
 
     public Map&lt;String, Object&gt; getPriceHistory(String securityId, LocalDate fromDate,
             LocalDate toDate, int page, Language lang) throws Exception {
-<span class="nc bnc" id="L158" title="All 2 branches missed.">        if (toDate == null) {</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">        if (toDate == null) {</span>
 <span class="nc" id="L159">            toDate = LocalDate.now();</span>
         }
-<span class="nc bnc" id="L161" title="All 2 branches missed.">        if (fromDate == null) {</span>
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">        if (fromDate == null) {</span>
 <span class="nc" id="L162">            fromDate = toDate.minusDays(1);</span>
         }
-<span class="nc" id="L164">        Object mayaClass = getMayaClass(securityId);</span>
-<span class="nc bnc" id="L165" title="All 2 branches missed.">        if (mayaClass instanceof MayaFunds) {</span>
-<span class="nc" id="L166">            FundHistory fundHistory = ((MayaFunds) mayaClass).getPriceHistory(securityId, fromDate, toDate, page, lang);</span>
-<span class="nc" id="L167">            return HistoryToMap(fundHistory);</span>
+<span class="fc" id="L164">        Object mayaClass = getMayaClass(securityId);</span>
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">        if (mayaClass instanceof MayaFunds) {</span>
+<span class="fc" id="L166">            FundHistory fundHistory = ((MayaFunds) mayaClass).getPriceHistory(securityId, fromDate, toDate, page, lang);</span>
+<span class="fc" id="L167">            return HistoryToMap(fundHistory);</span>
         } else {
 <span class="nc" id="L169">            SecurityHistory securityHistory = ((MayaSecurity) mayaClass).getPriceHistory(securityId, fromDate, toDate, page, lang);</span>
 <span class="nc" id="L170">            return HistoryToMap(securityHistory);</span>
@@ -172,117 +172,4 @@ public class Maya {
     }
 
 }
-
-/*
- * import java.util.logging.Logger;
- * import java.util.Map;
- * import java.util.HashMap;
- * import java.util.Set;
- * import java.util.HashSet;
- * import java.time.LocalDate;
- * import java.util.List;
- * 
- * import org.apache.http.impl.client.CloseableHttpClient;
- * import org.apache.http.impl.client.HttpClients;
- * 
- * import com.example.pymaya.MayaFunds;
- * import com.example.pymaya.MayaSecurity;
- * import com.example.pymaya.utils.Language;
- * 
- * public class Maya {
- * private MayaSecurity mayaSecurities;
- * private MayaFunds mayaFunds;
- * private Map&lt;String, Set&lt;String&gt;&gt; mappedSecurities;
- * 
- * public Maya(Logger logger, int numOfAttempts, CloseableHttpClient session,
- * boolean verify, int cachesize) {
- * if (session == null) {
- * session = HttpClients.createDefault();
- * }
- * 
- * this.mayaSecurities = new MayaSecurity(logger, numOfAttempts, session,
- * verify, cachesize);
- * this.mayaFunds = new MayaFunds(logger, numOfAttempts, session, verify,
- * cachesize);
- * 
- * this.mappedSecurities = new HashMap&lt;&gt;();
- * mapSecurities();
- * }
- * 
- * public Maya() {
- * this(null, 1, null, true, 128);
- * }
- * 
- * public List&lt;Map&lt;String, Object&gt;&gt; getAllSecurities(Language lang) {
- * return mayaSecurities.getAllSecurities(lang);
- * }
- * 
- * private void mapSecurities() {
- * List&lt;Map&lt;String, Object&gt;&gt; allSecurities = getAllSecurities(Language.ENGLISH);
- * for (Map&lt;String, Object&gt; security : allSecurities) {
- * String id = (String) security.get(&quot;Id&quot;);
- * String type = (String) security.get(&quot;Type&quot;);
- * mappedSecurities.computeIfAbsent(id, k -&gt; new HashSet&lt;&gt;()).add(type);
- * }
- * }
- * 
- * private Object getMayaClass(String securityId) {
- * if (mappedSecurities.get(securityId).contains(MayaFunds.TYPE)) {
- * return mayaFunds;
- * } else {
- * return mayaSecurities;
- * }
- * }
- * 
- * public Map&lt;String, Object&gt; getDetails(String securityId, Language lang) {
- * Object mayaClass = getMayaClass(securityId);
- * if (mayaClass instanceof MayaFunds) {
- * return ((MayaFunds) mayaClass).getDetails(securityId, lang);
- * } else {
- * return ((MayaSecurity) mayaClass).getDetails(securityId, lang);
- * }
- * }
- * 
- * public Map&lt;String, String&gt; getNames(String securityId) {
- * Object mayaClass = getMayaClass(securityId);
- * Map&lt;String, Object&gt; englishDetails = getDetails(securityId,
- * Language.ENGLISH);
- * Map&lt;String, Object&gt; hebrewDetails = getDetails(securityId, Language.HEBREW);
- * if (mayaClass instanceof MayaFunds) {
- * return ((MayaFunds) mayaClass).getNames(englishDetails, hebrewDetails);
- * } else {
- * return ((MayaSecurity) mayaClass).getNames(englishDetails, hebrewDetails);
- * }
- * }
- * 
- * public Map&lt;String, Object&gt; getPriceHistoryChunk(String securityId, LocalDate
- * fromDate, LocalDate toDate, int page, Language lang) {
- * Object mayaClass = getMayaClass(securityId);
- * if (mayaClass instanceof MayaFunds) {
- * return ((MayaFunds) mayaClass).getPriceHistoryChunk(securityId, fromDate,
- * toDate, page, lang);
- * } else {
- * return ((MayaSecurity) mayaClass).getPriceHistoryChunk(securityId, fromDate,
- * toDate, page, lang);
- * }
- * }
- * 
- * public List&lt;Map&lt;String, Object&gt;&gt; getPriceHistory(String securityId, LocalDate
- * fromDate, LocalDate toDate, int page, Language lang) {
- * if (toDate == null) {
- * toDate = LocalDate.now();
- * }
- * Object mayaClass = getMayaClass(securityId);
- * if (mayaClass instanceof MayaFunds) {
- * return ((MayaFunds) mayaClass).getPriceHistory(securityId, fromDate, toDate,
- * page, lang);
- * } else {
- * return ((MayaSecurity) mayaClass).getPriceHistory(securityId, fromDate,
- * toDate, page, lang);
- * }
- * }
- * }
- * 
- * 
- */
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

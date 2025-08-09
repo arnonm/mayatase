@@ -9,25 +9,21 @@ public class MayaSecurityDataRequest  extends MayaSecurityBaseRequest{
 
     public MayaSecurityDataRequest(String securityId, Language lang) throws Exception {
 <span class="fc" id="L11">        super();</span>
-        // Map&lt;String, String&gt; params = new HashMap&lt;&gt;();
-<span class="fc" id="L13">        this.params.put(&quot;securityId&quot;, securityId);</span>
-<span class="fc" id="L14">        this.params.put(&quot;lang&quot;, Integer.toString(lang.getValue()));</span>
-        // headers.put(&quot;referer&quot;, &quot;https://www.tase.co.il/&quot;);
-        // headers.put(&quot;Content-Type&quot;, &quot;application/json&quot;);
-        // headers.put(&quot;Host&quot;, &quot;api.tase.co.il&quot;);
-<span class="fc" id="L18">        this.headers.remove(&quot;Acccept&quot;);</span>
-<span class="fc" id="L19">        this.headers.remove(&quot;X-Maya-With&quot;);</span>
+<span class="fc" id="L12">        this.params.put(&quot;securityId&quot;, securityId);</span>
+<span class="fc" id="L13">        this.params.put(&quot;lang&quot;, Integer.toString(lang.getValue()));</span>
+<span class="fc" id="L14">        this.headers.remove(&quot;Acccept&quot;);</span>
+<span class="fc" id="L15">        this.headers.remove(&quot;X-Maya-With&quot;);</span>
 
-<span class="fc" id="L21">    }</span>
+<span class="fc" id="L17">    }</span>
 
     @Override
     public String getEndPoint() {
-<span class="fc" id="L25">        return END_POINT;</span>
+<span class="fc" id="L21">        return END_POINT;</span>
     }
 
     @Override
     public String getMethod() {
-<span class="fc" id="L30">        return METHOD;</span>
+<span class="fc" id="L26">        return METHOD;</span>
     }
 
     

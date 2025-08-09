@@ -35,7 +35,7 @@ public final class App {
     protected HttpURLConnection con;
     protected Map<String, String> headers = new HashMap<>();
     protected Map<String, String> params = new HashMap<>();
-    // protected Map<String, Object> response = new HashMap<>();
+    
     Map<String, Object> response = new HashMap<>();
     // protected String response;
     int status = 0;
@@ -46,10 +46,7 @@ public final class App {
 
         System.out.println("Hello, World!");
 
-        //Testing main = new Testing();
-        //String ignore = main.TestRequest();
-        // System.out.println(main.TestRequest());
-
+    
         
         Logger logger = Logger.getLogger(App.class.getName());
         Maya maya = new Maya(logger, 1, false);
@@ -58,43 +55,16 @@ public final class App {
 
         try {
             
-            /* 
-            System.out.println("Testing::main - before getAllSecurities");
-            allSecurities = maya.getAllSecurities(Language.ENGLISH);
-            // System.out.println(allSecurities);
-
-            System.out.println("Testing::main - after getAllSecurities");
-
+ 
             
-            System.out.println("Testing:: getNames for Funds");
-            System.out.println("Testing:: after GetNames - " +maya.getNames("5113428"));
-
-            System.out.println("Testing:: getNames for Security");
-            System.out.println("Testing:: after GetNames - " +maya.getNames("1135912"));
-
-            System.out.println("Testing:: getDetails for Security");
-            System.out.println(maya.getSecurityDetails("1135912",Language.ENGLISH));
-            System.out.println("Testing:: getDetails for Funds");
-            System.out.println(maya.getFundsDetails("5113428", Language.ENGLISH));
             
-            */
             System.out.println("Testing:: getPriceHistory for Funds");
             System.out.println(maya.getPriceHistoryChunk("5113428",LocalDate.of(2024,10,30), LocalDate.of(2024,10,31), 1, Language.ENGLISH ));
             
             System.out.println("Testing:: getPriceHistory for Security");
             System.out.println(maya.getPriceHistoryChunk("1135912",LocalDate.of(2024,10,30), LocalDate.of(2024,10,31), 1, Language.ENGLISH ));
             
-            // historical_prices = maya.getPriceHistory("1135912", LocalDate.of(2024, 10, 19), LocalDate.of(2024,10,19), 1, Language.ENGLISH);
-
-            // for (fund_object in historical_prices) {
-            //     System.out.println(fund_object);
-            // }
-
-            // System.out.println("Testing:: getPriceHistory for Fund");
-            // historical_prices = maya.get_price_history(security_id="5118393", from_data=date(2017, 12, 31));
-            // for (fund_object in historical_prices){
-            //     System.out.println(fund_object);
-            // }
+     
 
          
         } catch (Exception e) {
@@ -102,22 +72,7 @@ public final class App {
             System.out.println(e.getCause());
             System.out.println(e.getClass());
             }
-         /* 
-         * // response = sendRequest();
-         * Map <String, Object> allSecurities = new HashMap<>();
-         * try {
-         * System.out.println("before allSecurities mapping");
-         * allSecurities = maya.getAllSecurities(Language.ENGLISH);
-         * System.out.println("after allSecurities mapping");
-         * System.out.println(maya.getNames("1135912"));
-         * System.out.println(maya.getDetails("1135912", Language.ENGLISH));
-         * 
-         * // Map<String, Object> historicalPrices = maya.getPriceHistory("1135912",
-         * Date("2024","10","10"), null, 1, Language.ENGLISH);
-         * } catch (Exception e) {
-         * System.out.println("Error");
-         * }
-         */
+ 
     }
 
     public void CookieManager() {
@@ -149,13 +104,7 @@ public final class App {
 
             this.con.setRequestMethod("GET");
 
-            // System.out.println("Setting params");
-            // params.put("lang", "0");
-            // this.con.setDoOutput(true);
-            // DataOutputStream out = new DataOutputStream(con.getOutputStream());
-            // out.writeBytes(getParamsString(params));
-            // out.flush();
-            // out.close();
+        
 
             System.out.println("Testing::TestRequest - Setting headers");
             headers.put("Cache-Control", "no-cache");

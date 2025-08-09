@@ -62,12 +62,12 @@ public abstract class MayaBaseRequest {
         // System.setProperty(&quot;sun.net.http.allowRestrictedHeaders&quot;, &quot;true&quot;);
 <span class="fc" id="L63">        setExtendedURL();</span>
         
-<span class="pc bpc" id="L65" title="1 of 2 branches missed.">        if (getMethod() == &quot;POST&quot;) {</span>
-<span class="nc" id="L66">            this.POSTParameters = ParameterStringBuilder.getParamsString(this.params);</span>
-<span class="nc" id="L67">            this.headers.put(&quot;Content-Length&quot;, String.valueOf(this.POSTParameters.length()));</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        if (getMethod() == &quot;POST&quot;) {</span>
+<span class="fc" id="L66">            this.POSTParameters = ParameterStringBuilder.getParamsString(this.params);</span>
+<span class="fc" id="L67">            this.headers.put(&quot;Content-Length&quot;, String.valueOf(this.POSTParameters.length()));</span>
         }
 
-<span class="pc bpc" id="L70" title="3 of 4 branches missed.">        if (getMethod() == &quot;POST&quot; &amp;&amp; getEndPoint() == &quot;security/historyeod&quot;) {</span>
+<span class="pc bpc" id="L70" title="1 of 4 branches missed.">        if (getMethod() == &quot;POST&quot; &amp;&amp; getEndPoint() == &quot;security/historyeod&quot;) {</span>
 <span class="nc" id="L71">            this.POSTParameters = ParameterStringBuilder.postJsonParamsString(this.params);</span>
 <span class="nc" id="L72">            this.headers.put(&quot;Content-Length&quot;, String.valueOf(this.POSTParameters.length()));</span>
         }
@@ -88,7 +88,7 @@ public abstract class MayaBaseRequest {
     }
 
     private void setExtendedURL() throws Exception {
-<span class="pc bpc" id="L91" title="1 of 2 branches missed.">        if (this.getMethod() == &quot;GET&quot;) {</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">        if (this.getMethod() == &quot;GET&quot;) {</span>
 <span class="fc" id="L92">            String tempParams = com.maya.utils.ParameterStringBuilder.getParamsString(this.params);</span>
 <span class="pc bpc" id="L93" title="1 of 2 branches missed.">            if (tempParams.length() &gt; 0) {</span>
 <span class="fc" id="L94">                this.URLParameters = &quot;?&quot; + tempParams;</span>
@@ -97,22 +97,22 @@ public abstract class MayaBaseRequest {
 <span class="fc" id="L97">    }</span>
 
     public void setPOSTParameters() throws IOException {    
-<span class="pc bpc" id="L100" title="1 of 2 branches missed.">        if (this.getMethod() == &quot;POST&quot;) {</span>
-<span class="nc" id="L101">            logger.fine(&quot;POST setParameters&quot;);</span>
-<span class="nc" id="L102">            this.conn.setDoOutput(true);</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">        if (this.getMethod() == &quot;POST&quot;) {</span>
+<span class="fc" id="L101">            logger.fine(&quot;POST setParameters&quot;);</span>
+<span class="fc" id="L102">            this.conn.setDoOutput(true);</span>
             // this.conn.setDoInput(true);
             try {
-<span class="nc" id="L105">                DataOutputStream out = new DataOutputStream(this.conn.getOutputStream());</span>
-<span class="nc" id="L106">                logger.fine(&quot;Post parameters &quot; + this.POSTParameters);</span>
-<span class="nc" id="L107">                out.write(this.POSTParameters.getBytes(&quot;UTF-8&quot;));</span>
-<span class="nc" id="L108">                out.flush();</span>
-<span class="nc" id="L109">                out.close();</span>
+<span class="fc" id="L105">                DataOutputStream out = new DataOutputStream(this.conn.getOutputStream());</span>
+<span class="fc" id="L106">                logger.fine(&quot;Post parameters &quot; + this.POSTParameters);</span>
+<span class="fc" id="L107">                out.write(this.POSTParameters.getBytes(&quot;UTF-8&quot;));</span>
+<span class="fc" id="L108">                out.flush();</span>
+<span class="fc" id="L109">                out.close();</span>
 
 
 <span class="nc" id="L112">            } catch (IOException e) {</span>
 <span class="nc" id="L113">                logger.warning(e.getMessage());</span>
 <span class="nc" id="L114">                throw e;</span>
-<span class="nc" id="L115">            }</span>
+<span class="fc" id="L115">            }</span>
         }
 <span class="fc" id="L117">    }</span>
 
@@ -138,7 +138,7 @@ public abstract class MayaBaseRequest {
 <span class="fc" id="L138">        logger.fine(&quot;MayaBaseRequest::printRequestDetails - Headers:&quot;);</span>
         try {
 <span class="fc" id="L140">            logger.fine(this.conn.getRequestProperties().toString());</span>
-<span class="nc" id="L141">        } catch (Exception e) {</span>
+<span class="fc" id="L141">        } catch (Exception e) {</span>
 <span class="fc" id="L142">        }</span>
 <span class="fc" id="L143">        logger.fine(&quot;MayaBaseRequest::printRequestDetails - ContentType - &quot; +</span>
 <span class="fc" id="L144">            this.conn.getContentType());</span>

@@ -11,11 +11,11 @@ public class  MayaFundHistoricalRequest extends MayaFundBaseRequest {
 
 
     public String getEndPoint() {
-<span class="nc" id="L14">        return END_POINT;</span>
+<span class="fc" id="L14">        return END_POINT;</span>
     }
 
     public String getMethod() {
-<span class="nc" id="L18">        return METHOD;</span>
+<span class="fc" id="L18">        return METHOD;</span>
     }
 
     public String getBaseURL() {
@@ -31,17 +31,17 @@ public class  MayaFundHistoricalRequest extends MayaFundBaseRequest {
     public MayaFundHistoricalRequest(String securityId, LocalDate from_date, LocalDate to_date, 
             int page, int period, Language lang) throws Exception
     {
-<span class="nc" id="L34">        super(lang);</span>
-<span class="nc" id="L35">        this.headers.remove(&quot;Accept&quot;); // Not for fund</span>
-<span class="nc" id="L36">        this.headers.put(&quot;Content-Type&quot;, &quot;application/x-www-form-urlencoded&quot;);</span>
-<span class="nc" id="L37">        this.headers.replace(&quot;Host&quot;, &quot;mayaapi.tase.co.il&quot;);</span>
+<span class="fc" id="L34">        super(lang);</span>
+<span class="fc" id="L35">        this.headers.remove(&quot;Accept&quot;); // Not for fund</span>
+<span class="fc" id="L36">        this.headers.put(&quot;Content-Type&quot;, &quot;application/x-www-form-urlencoded&quot;);</span>
+<span class="fc" id="L37">        this.headers.replace(&quot;Host&quot;, &quot;mayaapi.tase.co.il&quot;);</span>
 
-<span class="nc" id="L39">        this.params.put(&quot;DateFrom&quot;, from_date.toString());</span>
-<span class="nc" id="L40">        this.params.put(&quot;DateTo&quot;, to_date.toString());</span>
-<span class="nc" id="L41">        this.params.put(&quot;FundId&quot;, securityId);</span>
-<span class="nc" id="L42">        this.params.put(&quot;Page&quot;, Integer.toString(page));</span>
-<span class="nc" id="L43">        this.params.put(&quot;Period&quot;, Integer.toString(period));</span>
-<span class="nc" id="L44">    }</span>
+<span class="fc" id="L39">        this.params.put(&quot;DateFrom&quot;, from_date.toString());</span>
+<span class="fc" id="L40">        this.params.put(&quot;DateTo&quot;, to_date.toString());</span>
+<span class="fc" id="L41">        this.params.put(&quot;FundId&quot;, securityId);</span>
+<span class="fc" id="L42">        this.params.put(&quot;Page&quot;, Integer.toString(page));</span>
+<span class="fc" id="L43">        this.params.put(&quot;Period&quot;, Integer.toString(period));</span>
+<span class="fc" id="L44">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

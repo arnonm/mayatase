@@ -9,12 +9,8 @@ public class MayaSecurityDataRequest  extends MayaSecurityBaseRequest{
 
     public MayaSecurityDataRequest(String securityId, Language lang) throws Exception {
         super();
-        // Map<String, String> params = new HashMap<>();
         this.params.put("securityId", securityId);
         this.params.put("lang", Integer.toString(lang.getValue()));
-        // headers.put("referer", "https://www.tase.co.il/");
-        // headers.put("Content-Type", "application/json");
-        // headers.put("Host", "api.tase.co.il");
         this.headers.remove("Acccept");
         this.headers.remove("X-Maya-With");
 
