@@ -109,10 +109,10 @@ public abstract class MayaBaseRequest {
 <span class="fc" id="L109">                out.close();</span>
 
 
-<span class="nc" id="L112">            } catch (IOException e) {</span>
+<span class="pc" id="L112">            } catch (IOException e) {</span>
 <span class="nc" id="L113">                logger.warning(e.getMessage());</span>
 <span class="nc" id="L114">                throw e;</span>
-<span class="fc" id="L115">            }</span>
+            }
         }
 <span class="fc" id="L117">    }</span>
 
@@ -121,7 +121,7 @@ public abstract class MayaBaseRequest {
 <span class="fc" id="L121">            logger.fine(&quot;MayaBaseRequest::setHeaders - set Request &quot; +</span>
 <span class="fc" id="L122">                entry.getKey() + &quot;: &quot; + entry.getValue());</span>
 <span class="fc" id="L123">            this.conn.setRequestProperty(entry.getKey(), entry.getValue());</span>
-<span class="fc" id="L124">        }</span>
+        }
 <span class="fc" id="L125">        logger.fine(&quot;MayaBaseRequest::setHeaders - &quot; +</span>
 <span class="fc" id="L126">           this.conn.getRequestProperties());</span>
 <span class="fc" id="L127">    }</span>
@@ -139,7 +139,7 @@ public abstract class MayaBaseRequest {
         try {
 <span class="fc" id="L140">            logger.fine(this.conn.getRequestProperties().toString());</span>
 <span class="fc" id="L141">        } catch (Exception e) {</span>
-<span class="fc" id="L142">        }</span>
+        }
 <span class="fc" id="L143">        logger.fine(&quot;MayaBaseRequest::printRequestDetails - ContentType - &quot; +</span>
 <span class="fc" id="L144">            this.conn.getContentType());</span>
 <span class="fc" id="L145">    }</span>

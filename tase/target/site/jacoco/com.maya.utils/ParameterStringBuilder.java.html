@@ -15,7 +15,7 @@ import java.io.UnsupportedEncodingException;
 <span class="fc" id="L15">          result.append(&quot;=&quot;);</span>
 <span class="fc" id="L16">          result.append(URLEncoder.encode((entry.getValue()), &quot;UTF-8&quot;));</span>
 <span class="fc" id="L17">          result.append(&quot;&amp;&quot;);</span>
-<span class="fc" id="L18">        }</span>
+        }
 
 <span class="fc" id="L20">        String resultString = result.toString();</span>
 <span class="pc bpc" id="L21" title="1 of 2 branches missed.">        return resultString.length() &gt; 0</span>
@@ -36,7 +36,7 @@ import java.io.UnsupportedEncodingException;
 <span class="nc" id="L36">          result.append(URLEncoder.encode(String.valueOf(entry.getValue()), &quot;UTF-8&quot;));</span>
 <span class="nc" id="L37">          result.append('&quot;');</span>
 <span class="nc" id="L38">          result.append(&quot;,&quot;);</span>
-<span class="nc" id="L39">        }</span>
+        }
 <span class="nc" id="L40">        result.append(&quot;}&quot;);</span>
 
 <span class="nc" id="L42">        String resultString = result.toString();</span>

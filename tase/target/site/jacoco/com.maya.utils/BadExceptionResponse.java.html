@@ -4,7 +4,7 @@ public class BadExceptionResponse extends Exception{
     
 <span class="nc" id="L5">    public BadExceptionResponse(int statusCode, String reason, String url, String method) {</span>
 <span class="nc" id="L6">        String message = &quot;Bad response to URL: &quot; + url + &quot; in method &quot; + method + </span>
-        &quot; [status code: &quot;+statusCode +&quot;, reason &quot;+ reason +&quot; ]&quot;;
+<span class="nc" id="L7">        &quot; [status code: &quot;+statusCode +&quot;, reason &quot;+ reason +&quot; ]&quot;;</span>
 <span class="nc" id="L8">        new BadExceptionResponse(0, message, &quot;&quot;, &quot;&quot;);</span>
 <span class="nc" id="L9">    }</span>
 }

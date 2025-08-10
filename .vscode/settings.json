@@ -15,5 +15,6 @@
     "java.import.gradle.jvmArguments": "",
     "java.import.gradle.user.home": "",
     "java.import.gradle.version": "",
-    "java.import.maven.enabled": false
+    "java.import.maven.enabled": false,
+    "java.configuration.updateBuildConfiguration": "interactive"
 }

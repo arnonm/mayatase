@@ -1,0 +1,55 @@
+{IsInternational=0, 
+RedemptionOther=סימון תיבת התיוג בדבר היותה של הקרן קרן כשרה., 
+IsTaxFreeForForeignInvestment=false, 
+ForeignCurrencyExposureDesc=Up to 10% of the fund's NAV, YearDesc=תשואה מתחילת השנה ב-%, 
+MagnaFundType=4, 
+AssetAsOfDate=2025-06-30T00: 00: 00, 
+MonthlyReportYear=2025, Last12MonthDesc=תשואה 12 חודשים ב-%, CorrectTradeDate=2025-08-07T00: 00: 00, Last12MonthAverage=6.76, YearShowYield=true, FundType=2, FundTypeDesc=קרן מחקה, 
+TrusteeFee=0.025, UnitValueValidDate=2025-08-07T00: 00: 00, ManagerLongName=KSM MUTUAL FUNDS LTD, TaxRouteCd=1, MetaTag={Keywords=בורסה, ישראל, מסחר, נתוני מסחר, שוק ההון, פיננסי, פיננסים, מאי"ה, מאיה, סוכן חכם, הודעות הבורסה, דיווחי חברות, מנפיק, מנפיקים, בעלי, עניין, תשלומים, דיווחים, אחרונים, פרטי קרן נאמנות, נתוני קרן נאמנות TASE, Israel, Israeli Economy, Finance, Market Data, Stock Exchange, ETF, Trading, Public Companies, MAYA, Company Disclosures, Financial Reports, Issuer, Issuers, payments,  Immediate Reports, Description=The MAYA website in English serves as a central website for investors,  includes information such as companies disclosures of companies choosing to file in English, corporate fact sheet, events and payment dates of corporate actions, information of public offerings, Financial Reports Schedule, TASE announcements and more.}, Last12MonthPosNeg=1.0, MachamTotal=6.276, IsCandidate=false, TrusteeLongName=UBANK TRUST COMPANY LTD, DistributeProfitPolicy=No Obligation to Distribute Income Payment, TrusteeShortName=UBANK TRUST COMPANY LTD, 
+MonthAverage=0.248333, Last12MonthYield=6.9, IsUnrestrictedFund=false, 
+UnitValuePrice=145.95, SecondaryClassification=Government Bonds, TradeActiveDay=0, ClassificationDesc=Exempt, IsImitatingFund=false, FundLongName=KSM KTF (0A) Tel Gov, 
+AssetValue=130.5, Icon=mf mf-fund_managers, DisclosureDateOfReport=2025-06-30T00:00:00, InsertRates=0, ManagerId=10047, Site=www.ksmc.co.il, SharesExposureCd=0, UnitValueRedeemed=0, YearAverage=2.96, MonthlyReportCode=1681862, FundShortName=KSM KTF TEL GOV, ShowDayYield=true, PurchasePrice=145.95, AnnualProspectusReportCd=1633659, SecurityRedemptionData=[], SharesExposureDesc=None, YearYield=2.93, MonthlyReportMonth=5, IsFundsDenominated=false, ProspectusReportCd=486251, IsBankPortfolioTracking=false, TrusteeId=10013, AnnualProspectusPubDate=2024-12-16T10:50:12, StandardDeviationShow=true, ClassificationCd=5, Assets=[], StockType=1, RelevantDate=2025-08-07T00:00:00, StandardDeviationDesc=סטיית תקן ב-%, IsRegularDatesFund=false, StandardDeviation=0.43, DisclosureChart=[{ParentLevel=3, LevelCd=301, ExposureRate=100.051, LevelDesc=Bonds traded in Israel, HasChild=1, LevelIndex=1}, {ParentLevel=3, LevelCd=30101, Parent=0301, ExposureRate=100.051, LevelDesc=Government Bonds, HasChild=1, LevelIndex=2}, {ParentLevel=3, LevelCd=3010101, Parent=030101, ExposureRate=38.722, LevelDesc=CPI-Linked Government Bonds, HasChild=0, LevelIndex=3}, {ParentLevel=3, LevelCd=3010102, Parent=030101, ExposureRate=61.329, LevelDesc=Unlinked Government Bonds, HasChild=0, LevelIndex=3}, {ParentLevel=5, LevelCd=501, ExposureRate=-0.049, LevelDesc=NIS Cash, HasChild=0, LevelIndex=1}, {ParentLevel=7, LevelCd=70101, ExposureRate=100.051, LevelDesc=High (AA and higher), HasChild=0, LevelIndex=1}, {ParentLevel=8, LevelCd=80201, Parent=0802, ExposureRate=5.291, LevelDesc=IL Governemnt Bonds, HasChild=0, LevelIndex=1}, {ParentLevel=8, LevelCd=80202, Parent=0802, ExposureRate=7.836, LevelDesc=Linked Government Bonds, HasChild=0, LevelIndex=1}], ProspectusPubDate=2009-11-15T15:02:08, IsForeignInvestmentFund=false, MonthDesc=תשואה מתחילת החודש ב-%, 
+FundIndicators=[{Desc=FundDeleted, Value=false, Key=Deleted}, {Desc=, Value=false, Key=MerLiqStatNm}, {Desc=UnrestrictedFund, Value=false, Key=UnrestrictedFund}, {Desc=LeveragedFund, Value=false, Key=LeveragedFund}, {Desc=ImitatingFund, Value=true, Key=ImitatingFund}, {Desc=InvertedExposureFund, Value=false, Key=InvertedExposureFund}, {Desc=IsBankPortfolioTrackingTitle, Value=false, Key=BankPortfolioTracking }, {Desc=RegularDatesFund, Value=false, Key=RegularDatesFund}, {Desc=FundsDenominated, Value=false, Key=FundsDenominated}, {Desc=ForeignInvestmentFund, Value=false, Key=ForeignInvestmentFund}, {Desc=IsTaxFreeForForeignInvestmentTitle, Value=false, Key=TaxFreeForForeignInvestment}, {Desc=KosherFund, Value=true, Key=IsKosherFund}, {Desc=Pending, Value=false, Key=IsCandidate}], MonthShowYield=true, PosNegYield=1.0, TaxRouteDesc=Tax Exempt, AssetCompostion={UnitValueRedeemed=2346329.8, Assets=[{BondRank=, AssetTypeName=פיקדון בבנק מסוים, Price=0.0, Quantity=0, 
+NisValue=-486.9054, Id=5113428, ManagerId=10047, FundPercentage=-0.38, AssetName=פיקדון בבנק מסוים, IdentityCd=1}, {BondRank=, AssetTypeName=אג"ח מדינה, Price=162.57, Quantity=2781944, NisValue=4522.6064, Id=5113428, ManagerId=10047, FundPercentage=3.51, AssetName=ממשלתית צמודה05/36 4%, IdentityCd=1097708
+    },
+    {BondRank=, AssetTypeName=אג"ח מדינה, Price=106.38, Quantity=2601027, NisValue=2766.9724, Id=5113428, ManagerId=10047, FundPercentage=2.15, AssetName=ממשלתית שקלית10/26 6.25, IdentityCd=1099456}, {BondRank=, AssetTypeName=אג"ח מדינה, Price=135.6, Quantity=3412872, NisValue=4627.8545, Id=5113428, ManagerId=10047, FundPercentage=3.59, AssetName=ממשלתית צמודה08/41 2.75%, IdentityCd=1120583
+    },
+    {BondRank=, AssetTypeName=אג"ח מדינה, Price=111.1, Quantity=4827721, NisValue=5363.598, Id=5113428, ManagerId=10047, FundPercentage=4.16, AssetName=ממשלתית שקלית01/42 5.5%, IdentityCd=1125400}, {BondRank=, AssetTypeName=אג"ח מדינה, Price=92.83, Quantity=3914788, NisValue=3634.0977, Id=5113428, ManagerId=10047, FundPercentage=2.82, AssetName=ממשלתית צמודה0545 1%, IdentityCd=1134865
+    },
+    {BondRank=, AssetTypeName=אג"ח מדינה, Price=100.65, Quantity=1714356, NisValue=1725.4993, Id=5113428, ManagerId=10047, FundPercentage=1.34, AssetName=ממשל שקלית0825, IdentityCd=1135557}, {BondRank=, AssetTypeName=אג"ח מדינה, Price=117.79, Quantity=3789527, NisValue=4463.684, Id=5113428, ManagerId=10047, FundPercentage=3.46, AssetName=ממשל צמודה1025, IdentityCd=1135912
+    },
+    {BondRank=, AssetTypeName=אג"ח מדינה, Price=96.46, Quantity=4928973, NisValue=4754.4873, Id=5113428, ManagerId=10047, FundPercentage=3.69, AssetName=ממשל שקלית0327, IdentityCd=1139344}, {BondRank=, AssetTypeName=אג"ח מדינה, Price=86.57, Quantity=4582883, NisValue=3967.4019, Id=5113428, ManagerId=10047, FundPercentage=3.08, AssetName=ממשל שקלית0347, IdentityCd=1140193
+    },
+    {BondRank=, AssetTypeName=אג"ח מדינה, Price=115.06, Quantity=4252898, NisValue=4893.3843, Id=5113428, ManagerId=10047, FundPercentage=3.8, AssetName=ממשל צמודה0527, IdentityCd=1140847}, {BondRank=, AssetTypeName=אג"ח מדינה, Price=99.88, Quantity=3704462, NisValue=3700.0166, Id=5113428, ManagerId=10047, FundPercentage=2.87, AssetName=ממשל משתנה0526, IdentityCd=1141795
+    },
+    {BondRank=, AssetTypeName=אג"ח מדינה, Price=95.32, Quantity=6062746, NisValue=5779.0093, Id=5113428, ManagerId=10047, FundPercentage=4.48, AssetName=ממשלתית שקלית09/28 2.25%, IdentityCd=1150879}, {BondRank=, AssetTypeName=אג"ח מדינה, Price=109.55, Quantity=4799664, NisValue=5258.0317, Id=5113428, ManagerId=10047, FundPercentage=4.08, AssetName=ממשלתית צמודה0529 0.5%, IdentityCd=1157023
+    },
+    {BondRank=, AssetTypeName=אג"ח מדינה, Price=86.05, Quantity=6592491, NisValue=5672.8384, Id=5113428, ManagerId=10047, FundPercentage=4.4, AssetName=ממשלתית שקלית03/30 1.00%, IdentityCd=1160985}, {BondRank=, AssetTypeName=אג"ח מדינה, Price=72.03, Quantity=5703803, NisValue=4108.449, Id=5113428, ManagerId=10047, FundPercentage=3.19, AssetName=ממשלתית שקלית05/37 1.5%, IdentityCd=1166180
+    },
+    {BondRank=, AssetTypeName=אג"ח מדינה, Price=97.92, Quantity=5831698, NisValue=5710.3984, Id=5113428, ManagerId=10047, FundPercentage=4.43, AssetName=ממשלתית משתנה11/30, IdentityCd=1166552}, {BondRank=, AssetTypeName=אג"ח מדינה, Price=73.85, Quantity=5074309, NisValue=3747.3772, Id=5113428, ManagerId=10047, FundPercentage=2.91, AssetName=ממשלתית צמודה11/2051 0.5%, IdentityCd=1168301
+    },
+    {BondRank=, AssetTypeName=אג"ח מדינה, Price=114.46, Quantity=3527931, NisValue=4038.0698, Id=5113428, ManagerId=10047, FundPercentage=3.13, AssetName=ממשלתית צמודה07/2026, IdentityCd=1169564}, {BondRank=, AssetTypeName=אג"ח מדינה, Price=102.22, Quantity=5361251, NisValue=5480.271, Id=5113428, ManagerId=10047, FundPercentage=4.25, AssetName=ממשלתית צמודה11/2031, IdentityCd=1172220
+    },
+    {BondRank=, AssetTypeName=אג"ח מדינה, Price=97.46, Quantity=4851170, NisValue=4727.95, Id=5113428, ManagerId=10047, FundPercentage=3.67, AssetName=ממשלתית שקלית02/26 0.5%, IdentityCd=1174697}, {BondRank=, AssetTypeName=אג"ח מדינה, Price=82.07, Quantity=6212026, NisValue=5098.21, Id=5113428, ManagerId=10047, FundPercentage=3.96, AssetName=ממשלתית שקלית04/32 1.3%, IdentityCd=1180660
+    },
+    {BondRank=, AssetTypeName=אג"ח מדינה, Price=70.19, Quantity=4312868, NisValue=3027.2021, Id=5113428, ManagerId=10047, FundPercentage=2.35, AssetName=ממשל שקלית11/52 2.8%, IdentityCd=1184076}, {BondRank=, AssetTypeName=אג"ח מדינה, Price=99.11, Quantity=6181738, NisValue=6126.7207, Id=5113428, ManagerId=10047, FundPercentage=4.75, AssetName=ממשל שקלית02/29 3.75%, IdentityCd=1194802
+    },
+    {BondRank=, AssetTypeName=אג"ח מדינה, Price=102.77, Quantity=5477839, NisValue=5629.575, Id=5113428, ManagerId=10047, FundPercentage=4.37, AssetName=ממשלתית צמודה1028 1.10%, IdentityCd=1197326}, {BondRank=, AssetTypeName=אג"ח מדינה, Price=97.06, Quantity=5373908, NisValue=5215.915, Id=5113428, ManagerId=10047, FundPercentage=4.05, AssetName=ממשל שקלית3/35 4%, IdentityCd=1202332
+    },
+    {BondRank=, AssetTypeName=אג"ח מדינה, Price=101.34, Quantity=5652846, NisValue=5728.594, Id=5113428, ManagerId=10047, FundPercentage=4.45, AssetName=ממשל שקלית9/27 3.75%, IdentityCd=1203579}, {BondRank=, AssetTypeName=אג"ח מדינה, Price=100.72, Quantity=3792702, NisValue=3820.0095, Id=5113428, ManagerId=10047, FundPercentage=2.96, AssetName=ממשלתית צמודה1033 1.6%, IdentityCd=1204379
+    },
+    {BondRank=, AssetTypeName=אג"ח מדינה, Price=95.9, Quantity=3144480, NisValue=3015.5564, Id=5113428, ManagerId=10047, FundPercentage=2.34, AssetName=ממשלתית משתנה11/34, IdentityCd=1205145}, {BondRank=, AssetTypeName=אג"ח מדינה, Price=103.8, Quantity=2262930, NisValue=2348.9214, Id=5113428, ManagerId=10047, FundPercentage=1.82, AssetName=ממשל שקלית8/29 4.60%, IdentityCd=1212893
+    }
+], DateValid=2025-05-29T00: 00: 00, UnitValueIssued=92124.26
+}, AssetRisk=[
+{IndexId=602, WeightPercentage=100.0, AssetName=Tel Gov
+}
+], 
+MonthYield=0.23, MonthlyReportMonthDesc=מאי, YearPosNeg=1.0, DayYield=0.03, IsInvertedExposureFund=false, IsKosherFund=true, StandardDeviationPosNeg=1.0, 
+ManagerShortName=KSM MUTUAL FUNDS LTD, MonthPosNeg=1.0, 
+OfferingDay=Sun - 14: 30, Mon-Thu - 16: 00, 
+MainClassification=Israeli Bonds - Government Bonds, ForeignCurrencyExposureCd=A, ManagementFee=0.25, IsLeveragedFund=false, 
+FundId=5113428, 
+SellPrice=145.95, 
+CreationPrice=145.95, UnitValueIssued=0, Last12MonthShowYield=true
+}

@@ -73,7 +73,7 @@ public class MayaBase {
 <span class="nc" id="L73">                logger.fine(&quot;MayaBase::getResponse - status response &quot; + response);</span>
 <span class="nc" id="L74">                logger.fine(&quot;MayaBase::getResponse - try again in 1 sec...&quot;);</span>
 <span class="nc" id="L75">                TimeUnit.SECONDS.sleep(1);</span>
-            } else {
+<span class="nc" id="L76">            } else {</span>
 <span class="fc" id="L77">                logger.fine(&quot;Disconnecting&quot;);</span>
 <span class="fc" id="L78">                conn.disconnect();</span>
 <span class="fc" id="L79">                return response;</span>
@@ -89,7 +89,7 @@ public class MayaBase {
 
 <span class="pc bpc" id="L90" title="1 of 2 branches missed.">        if (con.getResponseCode() &gt; 299) {</span>
 <span class="nc" id="L91">            streamReader = new InputStreamReader(con.getErrorStream());</span>
-        } else {
+<span class="nc" id="L92">        } else {</span>
 <span class="fc" id="L93">            streamReader = new InputStreamReader(con.getInputStream());</span>
         }
 

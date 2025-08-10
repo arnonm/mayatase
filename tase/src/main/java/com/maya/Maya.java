@@ -1,7 +1,11 @@
 package com.maya;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.lang.reflect.Type;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -168,6 +172,39 @@ public class Maya {
         } else {
             SecurityHistory securityHistory = ((MayaSecurity) mayaClass).getPriceHistory(securityId, fromDate, toDate, page, lang);
             return HistoryToMap(securityHistory);
+        }
+    }
+
+    public float getSellPrice(String securityId, LocalDate fromDate, LocalDate toDate, Language lang) throws Exception {
+        if (toDate == null) {
+            toDate = LocalDate.now();
+        }
+        if (fromDate == null) {
+            fromDate = toDate.minusDays(1);
+        
+        }
+        Map <String, Object> history = getPriceHistoryChunk(securityId, fromDate, toDate, 1, lang );
+        
+        if (history.isEmpty()) {
+            return 0.0f;
+        }
+        
+        Object obj = history.get("Table");
+        if (obj instanceof ArrayList) {
+            ArrayList<?> list = (ArrayList<?>) history.get("Table");
+            if (list.isEmpty()) {
+                return 0.0f;
+            }
+            Object first = list.get(0);
+            if (first instanceof Map) {
+                Object sellPrice = ((Map<?, ?>) first).get("SellPrice");
+                return sellPrice instanceof Number ? ((Number) sellPrice).floatValue() : 0.0f;
+            } else {
+                return 0.0f; // or handle the case where the first element is not a Map
+            }
+            
+        } else {
+            return 0.0f; // or handle the case where the object is not an ArrayList
         }
     }
 
