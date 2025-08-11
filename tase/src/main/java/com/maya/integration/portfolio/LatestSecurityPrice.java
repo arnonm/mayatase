@@ -124,8 +124,10 @@ public class LatestSecurityPrice //extends SecurityPrice
         this.value = value;
     }
 
-    public void setValue(Double double1) {
-        // TODO Auto-generated method stub
-        this.value = double1.longValue();
-    }
+    // public void setValue(Double double1) {
+    //     // TODO Auto-generated method stub
+    //     Double internal = double1 * 100;
+    //     long linternal = internal.longValue();
+    //     this.value = linternal/100;
+    // }
 }

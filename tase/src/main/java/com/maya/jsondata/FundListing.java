@@ -83,7 +83,7 @@ public class FundListing {
     private float PurchasePrice;
     private float SellPrice;
     private float CreationPrice;
-    private float UnitValuePrice;
+    private String UnitValuePrice;
     private LocalDateTime UnitValueValidDate;
     private float DayYield;
     private boolean ShowDayYield;

@@ -1,5 +1,9 @@
 package com.maya.integration.portfolio;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -17,9 +21,28 @@ public class MayaPortfolio {
     
     private static Logger logger= Logger.getLogger(MayaPortfolio.class.getName());
     private static Maya maya = new Maya(logger, 1, false);
+    static final ThreadLocal<DecimalFormat> FMT_PRICE = new ThreadLocal<DecimalFormat>();
+    private static BigDecimal fmtPrice = BigDecimal.ONE;
     
-
+    static long asPrice(String s) throws ParseException
+    {
+        return asPrice(s, BigDecimal.ONE);
+    }
     
+    static long asPrice(String s, BigDecimal factor) throws ParseException
+    {
+        if (s == null || s.isEmpty()) {
+            return LatestSecurityPrice.NOT_AVAILABLE;
+        }
+        BigDecimal v = new BigDecimal(s);
+        return v.multiply(factor).setScale(0, RoundingMode.HALF_UP).longValue();
+        // try {
+        //     double d = Double.parseDouble(s);
+        //     return (long) (d * factor.doubleValue());
+        // } catch (NumberFormatException e) {
+        //     throw new ParseException("Invalid price format: " + s, 0);
+        // }
+    }
 
     public static Optional<LatestSecurityPrice> getLatestQuote(Security security) {
         DayOfWeek day = LocalDate.now().getDayOfWeek();
@@ -49,9 +72,9 @@ public class MayaPortfolio {
             Optional<String> quoteCurrency = Optional.of("ILS");
     
 
-            Optional<Double> value = Optional.ofNullable((Double) details.get("UnitValuePrice"));
+            Optional<String> value = Optional.ofNullable((String) details.get("UnitValuePrice"));
             if (value.isPresent()) {
-                price.setValue(value.get());
+                price.setValue(asPrice(value.get()));
             }
 
             // price.setValue(value.isPresent() ? Long.parseLong(value.get()) : LatestSecurityPrice.NOT_AVAILABLE);
@@ -67,7 +90,7 @@ public class MayaPortfolio {
 
             // MarketVolume
             price.setVolume(LatestSecurityPrice.NOT_AVAILABLE);
-            
+
             if (price.getDate() == null  || price.getValue() <= 0) {
                 return Optional.empty();
             } else {

@@ -1,7 +1,5 @@
 package com.maya;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.lang.reflect.Type;
 import java.time.LocalDate;
@@ -101,7 +99,8 @@ public class Maya {
 
 
     private Map<String, Object> SecurityToMap(SecurityListing listing) {
-        Gson gson = new Gson();
+        //Gson gson = new Gson();
+        Gson gson = GSONUtil.createGson();
         String json = gson.toJson(listing);
         logger.fine("JSON "+json);
         Map<String, Object> map = gson.fromJson(json, new TypeToken<Map<String, Object>>() {}.getType());

@@ -195,7 +195,9 @@ class AppTest {
         // System.out.println(maya.getPriceHistoryChunk("1135912",LocalDate.of(2024,10,30), LocalDate.of(2024,10,31), 1, Language.ENGLISH ));
      }
  
-     /* Portfolio Tests */
+     /*****************************
+      *  Portfolio Tests 
+      *****************************/
 
      @Test
      void testGetLatestSecurityPriceforPortfolio() throws Exception {
@@ -210,7 +212,7 @@ class AppTest {
 
             secPrice = MayaPortfolio.getLatestQuote(security);
             price = secPrice.get();
-            assertEquals(price.getDate(), LocalDate.of(2025, 8, 7));
+            assertEquals(price.getDate(), LocalDate.of(2025, 8, 10));
             assertEquals(price.getHigh(), LatestSecurityPrice.NOT_AVAILABLE);
             assertEquals(price.getLow(), LatestSecurityPrice.NOT_AVAILABLE);
             //assertEquals(price.getValue(), Values.Quote.factorize(190.54));
@@ -219,6 +221,7 @@ class AppTest {
             e.printStackTrace();
         }
         
+    
 
      }
 

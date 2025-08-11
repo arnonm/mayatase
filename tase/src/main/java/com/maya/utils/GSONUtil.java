@@ -109,6 +109,7 @@ public final class GSONUtil {
         }
 
         return jsonPrimitive.getAsDouble();
+        
     }
 
     private static boolean isInteger(final JsonPrimitive jsonPrimitive) {
