@@ -81,16 +81,20 @@ public class Maya {
         }
     }
 
-    /* was single functon called getDetails for both getDetails. Will refactor as one after finishing funds
-    public String getDetails(String securityId, Language lang) throws Exception {
+    // was single functon called getDetails for both getDetails. Will refactor as one after finishing funds
+    public Map<String, Object> getDetails(String securityId, Language lang) throws Exception {
         Object mayaClass = getMayaClass(securityId);
         if (mayaClass instanceof MayaFunds) {
-            return ((MayaFunds) mayaClass).getDetails(securityId, lang);
+            FundListing fundDetails = ((MayaFunds) mayaClass).getDetails(securityId, lang);
+            return this.FundsToMap(fundDetails);
         } else {
-            return ((MayaSecurity) mayaClass).getDetails(securityId, lang);
+            SecurityListing securityDetails = ((MayaSecurity) mayaClass).getDetails(securityId, lang);  
+            return this.SecurityToMap(securityDetails);
         }
+
+    
     }
-    */
+    
     public Map<String, Object> getSecurityDetails(String securityId, Language lang) throws Exception {
         Object mayaClass = getMayaClass(securityId);
         SecurityListing listing =  ((MayaSecurity) mayaClass).getDetails(securityId, lang);

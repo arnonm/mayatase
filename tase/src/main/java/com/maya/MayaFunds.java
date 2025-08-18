@@ -4,7 +4,7 @@ import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
+// import com.google.gson.reflect.TypeToken;
 import com.maya.utils.Utils.Language;
 import com.maya.requestclasses.MayaFundDetailsRequest;
 import com.maya.requestclasses.MayaFundHistoricalRequest;
@@ -13,7 +13,7 @@ import com.maya.jsondata.FundListing;
 import com.maya.utils.GSONUtil;
 import com.maya.adapters.FundsLocalDateTimeAdapter;
 
-import java.lang.reflect.Type;
+// import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -25,7 +25,7 @@ public class MayaFunds extends MayaBase{
     
     public static final  int TYPE=4;
     private int period = 0;
-    private Type FundListingType = new TypeToken <FundListing>() {}.getType();
+    //private Type FundListingType = new TypeToken <FundListing>() {}.getType();
     
 
     public MayaFunds(Logger logger, int num_of_attempts, boolean verify) {

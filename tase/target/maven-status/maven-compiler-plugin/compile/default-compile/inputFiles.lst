@@ -6,9 +6,10 @@
 /Users/meshulam/JavaProjects/tase-standalone/tase/src/main/java/com/maya/adapters/FundsLocalDateAdapter.java
 /Users/meshulam/JavaProjects/tase-standalone/tase/src/main/java/com/maya/adapters/FundsLocalDateTimeAdapter.java
 /Users/meshulam/JavaProjects/tase-standalone/tase/src/main/java/com/maya/integration/portfolio/LatestSecurityPrice.java
-/Users/meshulam/JavaProjects/tase-standalone/tase/src/main/java/com/maya/integration/portfolio/MayaPortfolio.java
+/Users/meshulam/JavaProjects/tase-standalone/tase/src/main/java/com/maya/integration/portfolio/PortfolioPerformance.java
 /Users/meshulam/JavaProjects/tase-standalone/tase/src/main/java/com/maya/integration/portfolio/Security.java
 /Users/meshulam/JavaProjects/tase-standalone/tase/src/main/java/com/maya/integration/portfolio/SecurityNameConfig.java
+/Users/meshulam/JavaProjects/tase-standalone/tase/src/main/java/com/maya/integration/portfolio/Values.java
 /Users/meshulam/JavaProjects/tase-standalone/tase/src/main/java/com/maya/jsondata/FundAsset.java
 /Users/meshulam/JavaProjects/tase-standalone/tase/src/main/java/com/maya/jsondata/FundAssetComposition.java
 /Users/meshulam/JavaProjects/tase-standalone/tase/src/main/java/com/maya/jsondata/FundDisclosure.java

@@ -17,7 +17,7 @@ import com.maya.utils.GSONUtil;
 
 import java.util.Map;
 import java.util.HashMap;
-import java.util.Iterator;
+// import java.util.Iterator;
 import java.util.List;
 
 
@@ -44,7 +44,7 @@ public class MayaSecurity extends MayaBase {
         Type SecurityListingType = new TypeToken <List<SecurityListing>>() {}.getType();
         List<SecurityListing> list = gson.fromJson(response, SecurityListingType);
         
-        Iterator<SecurityListing> securityListingIterator = list.iterator();
+        // Iterator<SecurityListing> securityListingIterator = list.iterator();
         // while (securityListingIterator.hasNext()) {
         //     SecurityListing listing = securityListingIterator.next();
         //     this.logger.fine(listing.toString());

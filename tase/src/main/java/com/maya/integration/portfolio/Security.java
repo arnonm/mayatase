@@ -183,5 +183,15 @@ public class Security {
     {
         return wkn;
     }
-    
+
+    public String getCurrencyCode()
+    {
+        return currencyCode;
+    }
+
+    public void setCurrencyCode(String currencyCode)
+    {
+        this.currencyCode = currencyCode;
+        this.updatedAt = Instant.now();
+    }
 }

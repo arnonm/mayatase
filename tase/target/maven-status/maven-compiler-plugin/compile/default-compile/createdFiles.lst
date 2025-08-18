@@ -25,11 +25,11 @@ com/maya/jsondata/FundIndicator.class
 com/maya/requestclasses/MayaBaseRequest.class
 com/maya/MayaSecurity$1.class
 com/maya/Maya$1.class
-com/maya/integration/portfolio/MayaPortfolio.class
 com/maya/MayaFunds$1.class
 com/maya/Maya.class
 com/maya/jsondata/FundHistoryEntry.class
 com/maya/jsondata/SecurityListing.class
+com/maya/integration/portfolio/PortfolioPerformance.class
 com/maya/Maya$2.class
 com/maya/utils/FullResponseBuilder.class
 com/maya/requestclasses/MayaSecurityBaseRequest.class

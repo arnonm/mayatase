@@ -17,14 +17,17 @@ import java.time.LocalDate;
 import  org.junit.jupiter.api.Assertions;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
 import com.google.gson.Gson;
 import com.maya.integration.portfolio.LatestSecurityPrice;
-import com.maya.integration.portfolio.MayaPortfolio;
+import com.maya.integration.portfolio.PortfolioPerformance;
 import com.maya.integration.portfolio.Security;
 import com.maya.utils.GSONUtil;
 import com.maya.utils.Utils.Language;
@@ -32,6 +35,9 @@ import com.maya.utils.Utils.Language;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 import com.maya.integration.portfolio.LatestSecurityPrice;
 
 /**
@@ -199,10 +205,40 @@ class AppTest {
       *  Portfolio Tests 
       *****************************/
 
+
+    
      @Test
      void testGetLatestSecurityPriceforPortfolio() throws Exception {
         
         Security security = new Security();
+        security.setCurrencyCode("ILS");
+        security.setTickerSymbol("1135912");
+        
+        Optional<LatestSecurityPrice> secPrice;
+        LatestSecurityPrice price;
+        
+        try {
+
+            secPrice = PortfolioPerformance.getLatestQuote(security);
+            price = secPrice.get();
+            assertEquals(price.getDate(), LocalDate.of(2025, 8, 18));
+            assertNotEquals(price.getHigh(), LatestSecurityPrice.NOT_AVAILABLE);
+            assertNotEquals(price.getLow(), LatestSecurityPrice.NOT_AVAILABLE);
+            assertEquals(price.getValue(), 11857);
+            assertEquals(price.getVolume(), LatestSecurityPrice.NOT_AVAILABLE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Exception should not be thrown");
+        }
+            
+
+     }
+
+     @Test
+     void testGetLatestFundPriceforPortfolio() throws Exception {
+        
+        Security security = new Security();
+        security.setCurrencyCode("ILS");
         security.setTickerSymbol("5113428");
         
         Optional<LatestSecurityPrice> secPrice;
@@ -210,20 +246,21 @@ class AppTest {
         
         try {
 
-            secPrice = MayaPortfolio.getLatestQuote(security);
+            secPrice = PortfolioPerformance.getLatestQuote(security);
             price = secPrice.get();
-            assertEquals(price.getDate(), LocalDate.of(2025, 8, 10));
+            assertEquals(price.getDate(), LocalDate.of(2025, 8, 18));
             assertEquals(price.getHigh(), LatestSecurityPrice.NOT_AVAILABLE);
             assertEquals(price.getLow(), LatestSecurityPrice.NOT_AVAILABLE);
-            //assertEquals(price.getValue(), Values.Quote.factorize(190.54));
+            assertEquals(price.getValue(), 14648);
             assertEquals(price.getVolume(), LatestSecurityPrice.NOT_AVAILABLE);
         } catch (Exception e) {
             e.printStackTrace();
+            fail("Exception should not be thrown");
         }
-        
-    
+            
 
      }
+
 
      /* Mock Tests */
 
