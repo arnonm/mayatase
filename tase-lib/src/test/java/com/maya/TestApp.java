@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.logging.*;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import  org.junit.jupiter.api.Assertions;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -27,6 +28,8 @@ import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
 
 import com.google.gson.Gson;
+import com.maya.jsondata.FundHistoryEntry;
+import com.maya.jsondata.SecurityHistoryEntry;
 import com.maya.utils.GSONUtil;
 import com.maya.utils.Utils.Language;
 
@@ -40,17 +43,17 @@ import java.math.RoundingMode;
 /**
  * Unit test for simple App.
  */
-public class AppTest {
+public class TestApp {
     
 
     /************
      * Live Tests
-     */TestPortfolio
+     */
     
 
     @Test
     void testGetFundNamesLive() throws Exception{
-        Logger logger = Logger.getLogger(AppTest.class.getName());
+        Logger logger = Logger.getLogger(TestApp.class.getName());
         Maya maya = new Maya(logger, 1, false);
         System.out.println("Testing:: getNames for Funds");
         Map <String, String> names = maya.getNames("5113428");
@@ -67,7 +70,7 @@ public class AppTest {
     @Test 
     void testGetSecurityNameLive() throws Exception {
 
-        Logger logger = Logger.getLogger(AppTest.class.getName());
+        Logger logger = Logger.getLogger(TestApp.class.getName());
         Maya maya = new Maya(logger, 1, false);
         // System.out.println("Testing:: getNames for Security");
         
@@ -85,7 +88,7 @@ public class AppTest {
 
     @Test 
     void testGetSecurityDetailsEnglish() throws Exception {
-        Logger logger = Logger.getLogger(AppTest.class.getName());
+        Logger logger = Logger.getLogger(TestApp.class.getName());
         Maya maya = new Maya(logger, 1, false);
         String response = "{\"Id\":\"01135912\",\"Name\":\"ILCPI % 1025\",\"ISIN\":\"IL0011359127\",\"Type\":\" Government Bonds\",\"SubType\":0,\"BaseRate\":\"118.52\",\"HighRate\":\"118.55\",\"LowRate\":\"118.42\",\"OpenRate\":\"118.50\",\"InDay\":\"0\",\"ShareType\":\"0406\",\"EODTradeDate\":\"07/08/2025\",\"TurnOverValueShekel\":\"57322576.00\",\"MarketValue\":\"13101491\",\"CompanyName\":\"GALIL\",\"FullBranch\":\"\",\"CUSIP\":\"\",\"RegisteredCapital\":\"11055177366\",\"Exe\":\"\",\"ExeDesc\":\"\",\"ForeignMarket\":\"\",\"MinimumVolume\":\"8400\",\"MinimumVolumeBlock\":\"0\",\"DealsNo\":\"93\",\"OverallTurnOverUnits\":\"48372035\",\"MonthYield\":\"0.0\",\"AnnualYield\":\"2.9\",\"BrutoYield\":\"0.00\",\"RedemptionDate\":\"31/10/2025\",\"Linkage\":\"CPI\",\"AnnualInterest\":\"0.75000\",\"KeepStatusDate\":\"\",\"SuspendStatusDate\":\"\",\"IndexNumber\":\"\",\"IndexCategoryType\":\"\",\"UAssetName\":\"\",\"Symbol\":\"CPI1025\",\"PointsChange\":\"-0.01\",\"DaysUntilRedemption\":\"84\",\"BaseIndices\":\"99.6000000\",\"BaseIndicesDate\":\"15/06/2015\",\"CompanyLogo\":\"\",\"LastDealTime\":\"EoD\",\"IsForeignETF\":false,\"ExchangeDate\":\"\",\"LinkageType\":\"\",\"ExcessivePriceCurrency\":\"\",\"ExchangeShareName\":\"\",\"StrikeShareName\":\"\",\"ExchangeShareRate\":\"\",\"ExchangeRateType\":\"\",\"ExchangeRelation\":\"\",\"isTrading\":false,\"CompanyId\":\"954\",\"SecuritySubType\":\"Government bond - \\\"GALIL\\\"\",\"TradeDate\":\"07/08/2025\",\"TradeTime\":\"\",\"LastRate\":\"118.51\",\"Change\":\"-0.01\",\"GreenIndicators\":[],\"RedIndicators\":[],\"SecurityTypeInSite\":\"5\",\"ETFTypeInSite\":\"0\",\"SecurityLongName\":\"BANK OF ISRAEL - GALIL\",\"IsTASEUP\":false,\"AllowTasePlus\":true,\"HasOfferingPrice\":false,\"BlockDealTime\":\"EoD\"}";
 
@@ -112,7 +115,7 @@ public class AppTest {
 
     @Test 
     void testGetSecurityDetailsHeb() throws Exception {
-        Logger logger = Logger.getLogger(AppTest.class.getName());
+        Logger logger = Logger.getLogger(TestApp.class.getName());
         Maya maya = new Maya(logger, 1, false);
         String response = "{\"Id\":\"01135912\",\"Name\":\"ILCPI % 1025\",\"ISIN\":\"IL0011359127\",\"Type\":\" Government Bonds\",\"SubType\":0,\"BaseRate\":\"118.52\",\"HighRate\":\"118.55\",\"LowRate\":\"118.42\",\"OpenRate\":\"118.50\",\"InDay\":\"0\",\"ShareType\":\"0406\",\"EODTradeDate\":\"07/08/2025\",\"TurnOverValueShekel\":\"57322576.00\",\"MarketValue\":\"13101491\",\"CompanyName\":\"GALIL\",\"FullBranch\":\"\",\"CUSIP\":\"\",\"RegisteredCapital\":\"11055177366\",\"Exe\":\"\",\"ExeDesc\":\"\",\"ForeignMarket\":\"\",\"MinimumVolume\":\"8400\",\"MinimumVolumeBlock\":\"0\",\"DealsNo\":\"93\",\"OverallTurnOverUnits\":\"48372035\",\"MonthYield\":\"0.0\",\"AnnualYield\":\"2.9\",\"BrutoYield\":\"0.00\",\"RedemptionDate\":\"31/10/2025\",\"Linkage\":\"CPI\",\"AnnualInterest\":\"0.75000\",\"KeepStatusDate\":\"\",\"SuspendStatusDate\":\"\",\"IndexNumber\":\"\",\"IndexCategoryType\":\"\",\"UAssetName\":\"\",\"Symbol\":\"CPI1025\",\"PointsChange\":\"-0.01\",\"DaysUntilRedemption\":\"84\",\"BaseIndices\":\"99.6000000\",\"BaseIndicesDate\":\"15/06/2015\",\"CompanyLogo\":\"\",\"LastDealTime\":\"EoD\",\"IsForeignETF\":false,\"ExchangeDate\":\"\",\"LinkageType\":\"\",\"ExcessivePriceCurrency\":\"\",\"ExchangeShareName\":\"\",\"StrikeShareName\":\"\",\"ExchangeShareRate\":\"\",\"ExchangeRateType\":\"\",\"ExchangeRelation\":\"\",\"isTrading\":false,\"CompanyId\":\"954\",\"SecuritySubType\":\"Government bond - \\\"GALIL\\\"\",\"TradeDate\":\"07/08/2025\",\"TradeTime\":\"\",\"LastRate\":\"118.51\",\"Change\":\"-0.01\",\"GreenIndicators\":[],\"RedIndicators\":[],\"SecurityTypeInSite\":\"5\",\"ETFTypeInSite\":\"0\",\"SecurityLongName\":\"BANK OF ISRAEL - GALIL\",\"IsTASEUP\":false,\"AllowTasePlus\":true,\"HasOfferingPrice\":false,\"BlockDealTime\":\"EoD\"}";
         DayOfWeek day = LocalDate.now().getDayOfWeek();
@@ -132,7 +135,7 @@ public class AppTest {
     }
     @Test
     void testGetFundDetailsEnglish() throws Exception {
-        Logger logger = Logger.getLogger(AppTest.class.getName());
+        Logger logger = Logger.getLogger(TestApp.class.getName());
         Maya maya = new Maya(logger, 1, false);
         String response = "{english_short_name=KSM KTF (0A) Tel Gov, english_long_name=KSM KTF (0A) Tel Gov, hebrew_short_name=קסם KTF תל גוב- כללי, hebrew_long_name=קסם KTF תל גוב- כללי}";
 
@@ -151,7 +154,7 @@ public class AppTest {
 
      @Test
      void testGetFundDetailsHebrew() throws Exception{
-    	 Logger logger = Logger.getLogger(AppTest.class.getName());
+    	 Logger logger = Logger.getLogger(TestApp.class.getName());
          Maya maya = new Maya(logger, 1, false);
          
          String fundId = "5113428";
@@ -169,7 +172,7 @@ public class AppTest {
 
      @Test
      void testGetLatestFundPriceHistory() throws Exception { 
-        Logger logger = Logger.getLogger(AppTest.class.getName());
+        Logger logger = Logger.getLogger(TestApp.class.getName());
         Maya maya = new Maya(logger, 1, false);
         
         //System.out.println("Testing:: getPriceHistory for Funds");
@@ -190,19 +193,55 @@ public class AppTest {
         //System.out.println(maya.getPrice(fundId, start, LocalDate.now(), Language.ENGLISH));
         assertTrue(maya.getSellPrice(fundId, start, LocalDate.now(), Language.ENGLISH) >=0.0f, "Price should be non-negative");
      }
-        
+
+     @Test
      void testGetSecurityPriceHistory() throws Exception {
     	// This test is not implemented yet
-    	Logger logger = Logger.getLogger(AppTest.class.getName());
+    	Logger logger = Logger.getLogger(TestApp.class.getName());
         Maya maya = new Maya(logger, 1, false);
-        // System.out.println("Testing:: getPriceHistory for Security");
-        // System.out.println(maya.getPriceHistoryChunk("1135912",LocalDate.of(2024,10,30), LocalDate.of(2024,10,31), 1, Language.ENGLISH ));
+        LocalDate from = LocalDate.of(2024, 9, 30);
+        LocalDate to = LocalDate.of(2024, 10, 30);
+
+        // Test Security 
+        String securityId = "1135912";
+        Map<String, Object> pricehistory = maya.getPriceHistoryChunk(securityId,from, to, 1, Language.ENGLISH );
+
+        assertEquals(pricehistory.get("DateFrom"), from.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        assertTrue((int)pricehistory.get("TotalRec")>1);
+
+        ArrayList<SecurityHistoryEntry> items = (ArrayList<SecurityHistoryEntry>) pricehistory.get("Items");
+        Map<String, String> entry = (Map<String, String>) items.get(0);
+        assertTrue(entry.get("HighRate")!= null);
      }
  
+     @Test
+     void testGetFundPriceHistory() throws Exception {
+    	// This test is not implemented yet
+    	Logger logger = Logger.getLogger(TestApp.class.getName());
+        Maya maya = new Maya(logger, 1, false);
+        LocalDate from = LocalDate.of(2024, 9, 30);
+        LocalDate to = LocalDate.of(2024, 10, 30);
+
+        // Test Fund
+        String fundId = "5113428";
+        Map<String, Object> pricehistory = maya.getPriceHistoryChunk(fundId,from, to, 1, Language.ENGLISH );
+
+        System.out.println(pricehistory);
+        assertEquals(
+            (pricehistory.get("EndDate")),
+            to.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'00:00:00"))
+        );
+        assertTrue((int)pricehistory.get("Total")>1);
+
+        // ArrayList<SecurityHistoryEntry> items = (ArrayList<SecurityHistoryEntry>) pricehistory.get("Items");
+        ArrayList<SecurityHistoryEntry> items = (ArrayList<SecurityHistoryEntry>) pricehistory.get("Table");
+        Map<String, String> entry = (Map<String, String>) items.get(0);
+        assertTrue(entry.get("Rate")!= null);
+     }
 
      @Test
      void testGetSecurityPriceHistoryLive() throws Exception {
-         Logger logger = Logger.getLogger(AppTest.class.getName());
+         Logger logger = Logger.getLogger(TestApp.class.getName());
         Maya maya = new Maya(logger, 1, false);
         
         //System.out.println("Testing:: getPriceHistory for Funds");
@@ -227,7 +266,7 @@ public class AppTest {
 
      void testGetFundNamesStub() throws Exception{
     	// This test is not implemented yet
-         Logger logger = Logger.getLogger(AppTest.class.getName());
+         Logger logger = Logger.getLogger(TestApp.class.getName());
         Maya maya = new Maya(logger, 1, false);
         String response = "{\"english_short_name\":\"KSM KTF (0A) Tel Gov\",\"english_long_name\":\"KSM KTF (0A) Tel Gov\",\"hebrew_short_name\":\"ק.ש.מ ק\"}";
         String securityId = "123456";
@@ -245,7 +284,7 @@ public class AppTest {
 
     void testGetSecurityDetailsHeb_Mock() throws Exception {
     	// This test is not implemented yet
-        Logger logger = Logger.getLogger(AppTest.class.getName());
+        Logger logger = Logger.getLogger(TestApp.class.getName());
         Maya maya = Mockito.mock(Maya.class);
 
         String securityId = "1135912";

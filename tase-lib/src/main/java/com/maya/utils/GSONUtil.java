@@ -105,7 +105,8 @@ public final class GSONUtil {
     private static Number parseNumber(JsonPrimitive jsonPrimitive) {
 
         if (isInteger(jsonPrimitive)) {
-            return jsonPrimitive.getAsLong();
+            // return jsonPrimitive.getAsLong();
+            return jsonPrimitive.getAsInt();
         }
 
         return jsonPrimitive.getAsDouble();
