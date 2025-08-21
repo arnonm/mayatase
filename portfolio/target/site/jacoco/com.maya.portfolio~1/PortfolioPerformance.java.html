@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PortfolioPerformance.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Portfolio</a> &gt; <a href="index.source.html" class="el_package">com.maya.portfolio</a> &gt; <span class="el_source">PortfolioPerformance.java</span></div><h1>PortfolioPerformance.java</h1><pre class="source lang-java linenums">package com.maya.portfolio;
+
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.net.URISyntaxException;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.MessageFormat;
+import java.text.ParseException;
+import java.time.DayOfWeek;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Optional;
+import java.util.logging.Logger;
+
+import com.maya.Maya;
+import com.maya.portfolio.online.QuoteFeedException;
+import com.maya.portfolio.model.LatestSecurityPrice;
+import com.maya.portfolio.model.Security;
+import com.maya.portfolio.model.SecurityPrice;
+import com.maya.portfolio.online.QuoteFeed;
+import com.maya.portfolio.utils.Dates;
+import com.maya.portfolio.online.QuoteFeedData;
+import com.maya.utils.Utils.Language;
+
+<span class="fc" id="L35">public class PortfolioPerformance  implements QuoteFeed{</span>
+    
+<span class="fc" id="L37">    private static Logger logger= Logger.getLogger(PortfolioPerformance.class.getName());</span>
+<span class="fc" id="L38">    private static Maya maya = new Maya(logger, 1, false);</span>
+<span class="fc" id="L39">    private static BigDecimal fmtPrice = new BigDecimal(&quot;1.0000&quot;);</span>
+<span class="fc" id="L40">    private static int factor = 10000;</span>
+<span class="fc" id="L41">    private static BigDecimal bdFactor = BigDecimal.valueOf(factor);</span>
+
+    public static final String ID = &quot;TLV&quot;;
+
+<span class="fc" id="L45">    static final ThreadLocal&lt;DecimalFormat&gt; FMT_PRICE = new ThreadLocal&lt;DecimalFormat&gt;()</span>
+<span class="fc" id="L46">    {</span>
+        @Override
+        protected DecimalFormat initialValue()
+        {
+<span class="fc" id="L50">            DecimalFormat fmt = new DecimalFormat(&quot;0.###&quot;, new DecimalFormatSymbols(Locale.US)); //$NON-NLS-1$</span>
+<span class="fc" id="L51">            fmt.setParseBigDecimal(true);</span>
+<span class="fc" id="L52">            return fmt;</span>
+        }
+    };
+
+    @Override
+    public String getId() {
+<span class="nc" id="L58">        return ID;</span>
+    }
+
+    @Override
+    public  String getName() {
+<span class="nc" id="L63">        return &quot;TLV Stocks&quot;;</span>
+    }
+
+    public static long asPrice(String s) throws ParseException
+    {
+<span class="fc" id="L68">        return asPrice(s, BigDecimal.ONE);</span>
+    }
+    
+    static long asPrice(String s, BigDecimal factor) throws ParseException
+    {
+<span class="pc bpc" id="L73" title="2 of 4 branches missed.">        if (s == null || s.isEmpty()) {</span>
+<span class="nc" id="L74">            return LatestSecurityPrice.NOT_AVAILABLE;</span>
+        }
+<span class="pc bpc" id="L76" title="3 of 6 branches missed.">        if (&quot;N/A&quot;.equals(s) || &quot;null&quot;.equals(s) || &quot;NaN&quot;.equals(s)) //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$</span>
+<span class="nc" id="L77">            return LatestSecurityPrice.NOT_AVAILABLE;</span>
+
+<span class="fc" id="L79">        BigDecimal v = (BigDecimal) FMT_PRICE.get().parse(s);</span>
+        
+<span class="fc" id="L81">        BigDecimal vm = v.multiply(factor);</span>
+<span class="fc" id="L82">        BigDecimal vmbdFactor = vm.multiply(bdFactor);</span>
+<span class="fc" id="L83">        BigDecimal vmsetscale = vmbdFactor.setScale(0, RoundingMode.HALF_UP);</span>
+<span class="fc" id="L84">        long value = vmsetscale.longValue();</span>
+<span class="fc" id="L85">        return value;</span>
+
+        // return v.multiply(factor).multiply(bdFactor).setScale(0, RoundingMode.HALF_UP).longValue();
+        
+    }
+
+    @Override
+    public Optional&lt;LatestSecurityPrice&gt; getLatestQuote(Security security) {
+<span class="fc" id="L93">        DayOfWeek day = LocalDate.now().getDayOfWeek();</span>
+        LocalDate start;
+<span class="fc" id="L95">        LatestSecurityPrice price = new LatestSecurityPrice();</span>
+
+       
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">        if (day == DayOfWeek.SUNDAY) {</span>
+<span class="nc" id="L99">        	start = LocalDate.now().minusDays(3);</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">        } else if (day == DayOfWeek.SATURDAY) {</span>
+<span class="nc" id="L101">        	start = LocalDate.now().minusDays(2);</span>
+        } else {
+<span class="fc" id="L103">        	start = LocalDate.now().minusDays(1);</span>
+        }
+    try {
+            // Map &lt;String, Object&gt; history = maya.getPriceHistoryChunk(security.getTickerSymbol(), start, LocalDate.now(), 1, Language.ENGLISH );
+<span class="fc" id="L107">            Map &lt;String, Object&gt; details = maya.getDetails(security.getTickerSymbol(), Language.ENGLISH);   </span>
+<span class="fc" id="L108">            System.out.println(details);</span>
+
+<span class="fc" id="L110">            Optional&lt;String&gt; time= Optional.ofNullable((String) details.get(&quot;RelevantDate&quot;));</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">            if (time.isPresent()) {</span>
+<span class="fc" id="L112">                ZoneOffset exchangeZoneId = ZoneOffset.ofHours(-2);</span>
+<span class="fc" id="L113">                LocalDate localTime = LocalDate.parse(time.get().substring(0, 10));</span>
+<span class="fc" id="L114">                price.setDate(localTime);</span>
+            }
+
+            //TradeDate
+<span class="fc" id="L118">            Optional&lt;String&gt; tradeDate= Optional.ofNullable((String) details.get(&quot;TradeDate&quot;));</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">            if (tradeDate.isPresent()) {</span>
+<span class="fc" id="L120">                ZoneOffset exchangeZoneId = ZoneOffset.ofHours(-2);</span>
+<span class="fc" id="L121">                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(&quot;dd/MM/yyyy&quot;);</span>
+<span class="fc" id="L122">                LocalDate date = LocalDate.parse(tradeDate.get(), formatter);</span>
+<span class="fc" id="L123">                price.setDate(date);</span>
+            }
+
+            // Hardcoded to ILA for Tel-Aviv Market
+<span class="fc" id="L127">            Optional&lt;String&gt; quoteCurrency = Optional.of(&quot;ILA&quot;);</span>
+    
+
+<span class="fc" id="L130">            Optional&lt;String&gt; value = Optional.ofNullable((String) details.get(&quot;UnitValuePrice&quot;));</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">            if (value.isPresent()) {</span>
+<span class="fc" id="L132">                String p = value.get();</span>
+<span class="fc" id="L133">                System.out.println(&quot;UnitValuePrice: &quot; + p);</span>
+<span class="fc" id="L134">                long asPrice = asPrice(p);</span>
+<span class="fc" id="L135">                System.out.println(&quot;UnitValuePrice asPrice: &quot; + asPrice);</span>
+<span class="fc" id="L136">                System.out.println(&quot;Quote code: &quot; + quoteCurrency.orElse(null));</span>
+<span class="fc" id="L137">                System.out.println(&quot;Security code: &quot; + security.getCurrencyCode());</span>
+<span class="fc" id="L138">                System.out.println(&quot;Converted value: &quot; + convertILS(asPrice, quoteCurrency.orElse(null), security.getCurrencyCode()));  </span>
+<span class="fc" id="L139">                price.setValue(convertILS(asPrice, quoteCurrency.orElse(null), security.getCurrencyCode()));</span>
+            }
+
+            // LastRate
+<span class="fc" id="L143">            Optional&lt;String&gt; lastRate = Optional.ofNullable((String) details.get(&quot;LastRate&quot;));</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">            if (lastRate.isPresent()) {</span>
+<span class="fc" id="L145">                String p = lastRate.get();</span>
+<span class="fc" id="L146">                System.out.println(&quot;UnitValuePrice: &quot; + p);</span>
+<span class="fc" id="L147">                long asPrice = asPrice(p);</span>
+<span class="fc" id="L148">                System.out.println(&quot;UnitValuePrice asPrice: &quot; + asPrice);</span>
+<span class="fc" id="L149">                System.out.println(&quot;Quote code: &quot; + quoteCurrency.orElse(null));</span>
+<span class="fc" id="L150">                System.out.println(&quot;Security code: &quot; + security.getCurrencyCode());</span>
+<span class="fc" id="L151">                long convertedPrice = convertILS(asPrice, &quot;ILA&quot;, &quot;ILS&quot;);</span>
+<span class="fc" id="L152">                System.out.println(&quot;Converted value: &quot; + convertedPrice);   </span>
+<span class="fc" id="L153">                System.out.println(&quot;Converted value: &quot; + convertILS(asPrice, quoteCurrency.orElse(null), security.getCurrencyCode()));  </span>
+<span class="fc" id="L154">                price.setValue(convertILS(asPrice(lastRate.get()), quoteCurrency.orElse(null), security.getCurrencyCode()));</span>
+            }
+
+            //Optional&lt;String&gt; value = extract value
+            // if there is a value setCurrentCode
+
+            // Optional&lt;String&gt; high = extract regular Market Day High - HighRate
+<span class="fc" id="L161">            Optional&lt;String&gt; highRate = Optional.ofNullable((String) details.get(&quot;HighRate&quot;));</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">            if (highRate.isPresent()) {</span>
+<span class="fc" id="L163">                price.setHigh(convertILS(asPrice(highRate.get()), quoteCurrency.orElse(null), security.getCurrencyCode()));</span>
+            }  else {
+<span class="fc" id="L165">                price.setHigh(LatestSecurityPrice.NOT_AVAILABLE);</span>
+            }
+
+            
+
+            // Optional &lt;String&gt; low = extract regular Market Day Low - LowRate
+<span class="fc" id="L171">            Optional&lt;String&gt; lowRate = Optional.ofNullable((String) details.get(&quot;LowRate&quot;));</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">            if (lowRate.isPresent()) {</span>
+<span class="fc" id="L173">                price.setLow(convertILS(asPrice(lowRate.get()), quoteCurrency.orElse(null), security.getCurrencyCode()));</span>
+            }   else {
+<span class="fc" id="L175">                    price.setLow(LatestSecurityPrice.NOT_AVAILABLE);</span>
+            }
+
+
+            // MarketVolume
+<span class="fc" id="L180">            price.setVolume(LatestSecurityPrice.NOT_AVAILABLE);</span>
+
+<span class="pc bpc" id="L182" title="2 of 4 branches missed.">            if (price.getDate() == null  || price.getValue() &lt;= 0) {</span>
+<span class="nc" id="L183">                return Optional.empty();</span>
+            } else {
+<span class="fc" id="L185">                return Optional.of(price);</span>
+            }
+<span class="nc" id="L187">        } catch (IOException | ParseException e) {</span>
+<span class="nc" id="L188">            return Optional.empty();</span>
+
+<span class="fc" id="L190">        } catch (Exception e) {</span>
+<span class="fc" id="L191">            logger.warning(&quot;Error &quot; + e.getMessage() + &quot;, traceback: &quot; + e.getStackTrace());</span>
+<span class="fc" id="L192">            throw new RuntimeException(e);</span>
+        }   
+        
+    }
+
+    @Override
+    public QuoteFeedData getHistoricalQuotes(Security security, boolean collectRawResponse)
+    {
+<span class="fc" id="L200">        LocalDate start = calculateStart(security);</span>
+<span class="fc" id="L201">        return internalGetQuotes(security, start);</span>
+
+    }
+
+    final LocalDate calculateStart(Security security) {
+<span class="pc bpc" id="L206" title="2 of 4 branches missed.">        if (security.getTickerSymbol() == null || security.getTickerSymbol().isEmpty()) {</span>
+<span class="nc" id="L207">            SecurityPrice lastHistoricalQuote = security.getPrices().get(security.getPrices().size() - 1);</span>
+<span class="nc" id="L208">            return lastHistoricalQuote.getDate();</span>
+        } else {
+<span class="fc" id="L210">            return LocalDate.of(1900,1,1);</span>
+        }
+
+    }
+
+    private QuoteFeedData internalGetQuotes(Security security, LocalDate start) {
+        
+<span class="pc bpc" id="L217" title="2 of 4 branches missed.">        if (security.getTickerSymbol() == null || security.getTickerSymbol().isEmpty()) {</span>
+<span class="nc" id="L218">            return QuoteFeedData.withError(</span>
+<span class="nc" id="L219">                new IOException(MessageFormat.format(Messages.MsgMissingTickerSymbol, security.getName())));</span>
+        }  
+        
+        try {
+
+<span class="fc" id="L224">            String responseBody = requestData(security, start);</span>
+
+<span class="fc" id="L226">            return new QuoteFeedData();</span>
+<span class="nc" id="L227">        } catch (IOException e) {</span>
+<span class="nc" id="L228">            return QuoteFeedData.withError(e);</span>
+        }   
+    }
+
+    private String requestData(Security security, LocalDate startDate) throws IOException   {
+
+<span class="fc" id="L234">        int days = Dates.daysBetween(startDate, LocalDate.now());</span>
+        try {
+<span class="fc" id="L236">            Map &lt;String, Object&gt; history = maya.getPriceHistoryChunk(security.getTickerSymbol(), startDate, LocalDate.now(), 1, Language.ENGLISH );</span>
+<span class="nc" id="L237">        } catch (Exception e) {</span>
+<span class="nc" id="L238">            logger.warning(&quot;Error &quot; + e.getMessage() + &quot;, traceback: &quot; + e.getStackTrace());</span>
+<span class="nc" id="L239">            throw new IOException();</span>
+<span class="fc" id="L240">        }</span>
+<span class="fc" id="L241">        return &quot;&quot;;</span>
+    }
+
+
+    QuoteFeedData ignore(Security security) {
+        
+<span class="nc" id="L247">         LocalDate quoteStartDate = null;</span>
+
+<span class="nc bnc" id="L249" title="All 2 branches missed.">        if (!security.getPrices().isEmpty())</span>
+        {
+<span class="nc" id="L251">            LocalDate lastPriceDate = security.getPrices().get(security.getPrices().size() - 1).getDate();</span>
+
+            // skip the download if
+            // a) the configuration has not changed and we therefore can assume
+            // historical prices have been provided by this feed *and*
+            // b) there cannot be a newer price available on the server
+
+<span class="nc" id="L258">            Optional&lt;Instant&gt; configChanged = security.getEphemeralData().getFeedConfigurationChanged();</span>
+<span class="nc" id="L259">            Optional&lt;Instant&gt; feedUpdate = security.getEphemeralData().getFeedLastUpdate();</span>
+<span class="nc bnc" id="L260" title="All 2 branches missed.">            Boolean configHasNotChanged = configChanged.isPresent()</span>
+<span class="nc bnc" id="L261" title="All 4 branches missed.">                            || (feedUpdate.isPresent() &amp;&amp; feedUpdate.get().isAfter(configChanged.get()));</span>
+
+<span class="nc bnc" id="L263" title="All 2 branches missed.">            if (configHasNotChanged)</span>
+            {
+<span class="nc" id="L265">                ZonedDateTime utcNow = ZonedDateTime.now(ZoneOffset.UTC);</span>
+<span class="nc" id="L266">                LocalDate utcToday = utcNow.toLocalDate();</span>
+
+                // Check if symbol ends with &quot;.TG&quot; (Tradegate) and if it's after
+                // 16:00 UTC
+<span class="nc" id="L270">                boolean isTradegate = security.getTickerSymbol().endsWith(&quot;.TG&quot;); //$NON-NLS-1$</span>
+<span class="nc bnc" id="L271" title="All 2 branches missed.">                boolean after16UTC = utcNow.getHour() &gt; 15;</span>
+
+                // For EU equities, it will be available only the next day.
+                // For US equities, a couple hours after market closing at 22:00
+                // UTC.
+<span class="nc bnc" id="L276" title="All 4 branches missed.">                LocalDate expectedAvailablePrice = (isTradegate &amp;&amp; after16UTC) ? utcToday : utcToday.minusDays(1);</span>
+
+                // For the time being, use a minimal calendar (weekends,
+                // christmas, new year). We can possibly switch to
+                // exchange-specific trade calendar, however, let's start with
+                // less aggressive caching. Do not use the trade calendar
+                // configured by the user.
+                // var tradeCalendar = TradeCalendarManager.getInstance(TradeCalendarManager.MINIMAL_CALENDAR_CODE);
+
+                // while (tradeCalendar.isHoliday(expectedAvailablePrice))
+                // {
+                //     expectedAvailablePrice = expectedAvailablePrice.minusDays(1);
+                // }
+
+<span class="nc bnc" id="L290" title="All 2 branches missed.">                if (lastPriceDate.equals(expectedAvailablePrice))</span>
+                {
+                    // skip update b/c server cannot have newer data
+<span class="nc" id="L293">                    return new QuoteFeedData();</span>
+                }
+            }
+
+            // adjust request to Monday to enable more aggressive caching
+<span class="nc" id="L298">            quoteStartDate = lastPriceDate;</span>
+<span class="nc bnc" id="L299" title="All 2 branches missed.">            if (quoteStartDate.getDayOfWeek() != DayOfWeek.MONDAY)</span>
+<span class="nc" id="L300">                quoteStartDate = quoteStartDate.with(TemporalAdjusters.previous(DayOfWeek.MONDAY));</span>
+<span class="nc" id="L301">        }</span>
+        else
+        {
+            // request 10 years starting Jan 1st to enable caching
+<span class="nc" id="L305">            quoteStartDate = LocalDate.now().minusYears(10).withDayOfYear(1);</span>
+        }
+<span class="nc" id="L307">        return getHistoricalQuotes(security, true);</span>
+    }
+
+    @Override
+    public QuoteFeedData previewHistoricalQuotes(Security security) throws QuoteFeedException
+    {
+<span class="nc bnc" id="L313" title="All 2 branches missed.">        if (security.getTickerSymbol() == null)</span>
+        {
+<span class="nc" id="L315">            return QuoteFeedData.withError(</span>
+<span class="nc" id="L316">                            new IOException(MessageFormat.format(Messages.MsgMissingTickerSymbol, security.getName())));</span>
+        }
+
+        //return getHistoricalQuotes(security, true, LocalDate.now().minusMonths(2));
+<span class="nc" id="L320">        return getHistoricalQuotes(security, true);</span>
+    }
+
+    
+
+    private static long convertILS(long price, String quoteCurrency, String securityCurrency)
+    {   
+<span class="pc bpc" id="L327" title="1 of 2 branches missed.">        if (quoteCurrency != null)</span>
+        {
+<span class="pc bpc" id="L329" title="2 of 4 branches missed.">            if (&quot;ILA&quot;.equals(quoteCurrency) &amp;&amp; &quot;ILS&quot;.equals(securityCurrency)) //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L330">                return price / 100;</span>
+<span class="nc bnc" id="L331" title="All 4 branches missed.">            if (&quot;ILS&quot;.equals(quoteCurrency) &amp;&amp; &quot;ILA&quot;.equals(securityCurrency)) //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="nc" id="L332">                return price * 100;</span>
+        }
+<span class="nc" id="L334">        return price;</span>
+    }
+
+    public long factorize(double value)
+    {
+<span class="nc" id="L339">        return Math.round(value * factor);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QuoteFeed.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Portfolio</a> &gt; <a href="index.source.html" class="el_package">com.maya.portfolio.online</a> &gt; <span class="el_source">QuoteFeed.java</span></div><h1>QuoteFeed.java</h1><pre class="source lang-java linenums">package com.maya.portfolio.online;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+// import nam÷e.abuchen.portfolio.PortfolioLog;
+import com.maya.portfolio.model.Exchange;
+import com.maya.portfolio.model.LatestSecurityPrice;
+import com.maya.portfolio.PortfolioLog;
+import com.maya.portfolio.online.QuoteFeedData;
+// import com.maya.portfolio.online.QuoteFeedException;
+import com.maya.portfolio.model.Security;
+import com.maya.portfolio.model.SecurityPrice;
+import com.maya.portfolio.online.QuoteFeed;
+
+public interface 
+QuoteFeed // NOSONAR
+{
+<span class="fc" id="L22">    static final Pattern HOST_PATTERN = Pattern.compile(&quot;^https?://([^/]+)/?.*&quot;); //$NON-NLS-1$</span>
+
+    String MANUAL = &quot;MANUAL&quot;; //$NON-NLS-1$
+
+    /**
+     * Returns the technical identifier of the quote feed.
+     */
+    String getId();
+
+    /**
+     * Returns the display name of the quote feed.
+     */
+    String getName();
+
+    /**
+     * Returns the criterion used to group securities for the price update. By
+     * default, this is the feed itself. However, when downloading prices from a
+     * website, it maybe the host name to parallelize requests to different
+     * hosts while avoiding overloading a single host. This also works across
+     * feeds, e.g., the generic HTML and JSON feeds should not access the same
+     * server in parallel.
+     */
+    default String getGroupingCriterion(Security security)
+    {
+<span class="nc" id="L46">        return getId();</span>
+    }
+
+    default String getLatestGroupingCriterion(Security security)
+    {
+<span class="nc" id="L51">        return getGroupingCriterion(security);</span>
+    }
+
+    /**
+     * Extracts the grouping criterion from the given URL.
+     */
+    default String getCriterionFrom(String url)
+    {
+<span class="nc bnc" id="L59" title="All 4 branches missed.">        if (url == null || url.isEmpty())</span>
+<span class="nc" id="L60">            return getId();</span>
+
+        // Use regex to extract host because the URL may contain template
+        // patterns which woould not be parsed correctly by URL.getHost()
+<span class="nc" id="L64">        Matcher matcher = HOST_PATTERN.matcher(url);</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">        return matcher.matches() ? matcher.group(1) : getId();</span>
+    }
+
+    /**
+     * Returns true if the download request should be merged, i.e. first the
+     * historical prices and then immediately the latest prices. It is used if
+     * the quote provider does not support different APIs for historical and
+     * latest prices and the underlying request can be cached.
+     */
+    default boolean mergeDownloadRequests()
+    {
+<span class="nc" id="L76">        return false;</span>
+    }
+
+    default int getMaxRateLimitAttempts()
+    {
+<span class="nc" id="L81">        return 3;</span>
+    }
+
+    /**
+     * Returns the help URL to be shown to the user.
+     */
+    default Optional&lt;String&gt; getHelpURL()
+    {
+<span class="nc" id="L89">        return Optional.empty();</span>
+    }
+
+    /**
+     * Update the latest quote of the given securities.
+     */
+    default Optional&lt;LatestSecurityPrice&gt; getLatestQuote(Security security)throws QuoteFeedException
+    {
+<span class="nc" id="L97">        QuoteFeedData data = getHistoricalQuotes(security, false);</span>
+
+        // if (!data.getErrors().isEmpty())
+        //     PortfolioLog.error(data.getErrors());
+
+<span class="nc" id="L102">        List&lt;LatestSecurityPrice&gt; prices = data.getLatestPrices();</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">        if (prices.isEmpty())</span>
+<span class="nc" id="L104">            return Optional.empty();</span>
+
+<span class="nc" id="L106">        Collections.sort(prices, new SecurityPrice.ByDate());</span>
+
+<span class="nc" id="L108">        return Optional.of(prices.get(prices.size() - 1));</span>
+    }
+
+    /**
+     * Retrieves the historical quotes of the given security. The quote provider
+     * may reduce the response to only include newly updated quotes.
+     */
+    QuoteFeedData getHistoricalQuotes(Security security, boolean collectRawResponse) throws QuoteFeedException;
+
+    /**
+     * Retrieves a sample of historical quotes of the given security. The list
+     * of quotes may be reduced to the last 2 months or latest 100 entries.
+     */
+    default QuoteFeedData previewHistoricalQuotes(Security security) throws QuoteFeedException
+    {
+<span class="nc" id="L123">        return getHistoricalQuotes(security, true);</span>
+    }
+
+    default List&lt;Exchange&gt; getExchanges(Security subject, List&lt;Exception&gt; errors)
+    {
+<span class="nc" id="L128">        return Collections.emptyList();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

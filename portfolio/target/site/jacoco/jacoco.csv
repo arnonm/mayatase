@@ -1,0 +1,20 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+Portfolio,com.maya.portfolio.online,QuoteFeedData.RawResponse,15,0,0,0,6,0,3,0,3,0
+Portfolio,com.maya.portfolio.online,QuoteFeedData,63,21,0,0,15,5,9,2,9,2
+Portfolio,com.maya.portfolio.online,QuoteFeedException,7,0,0,0,4,0,2,0,2,0
+Portfolio,com.maya.portfolio.online,QuoteFeed,69,4,8,0,17,1,13,1,9,1
+Portfolio,com.maya.Portfolio,HolidayName,3,0,0,0,1,0,1,0,1,0
+Portfolio,com.maya.portfolio,PortfolioPerformance,224,499,42,28,47,85,34,16,5,10
+Portfolio,com.maya.portfolio,Messages,3,0,0,0,2,0,1,0,1,0
+Portfolio,com.maya.portfolio,PortfolioLog,11,0,0,0,4,0,2,0,2,0
+Portfolio,com.maya.portfolio,PortfolioPerformance.new ThreadLocal() {...},0,17,0,0,0,4,0,2,0,2
+Portfolio,com.maya.portfolio.model,SecurityNameConfig,42,0,0,0,9,0,3,0,3,0
+Portfolio,com.maya.portfolio.model,Security.ByName,34,0,8,0,12,0,7,0,3,0
+Portfolio,com.maya.portfolio.model,Security.TextUtil,21,0,6,0,8,0,5,0,2,0
+Portfolio,com.maya.portfolio.model,SecurityEphemeralData,32,0,0,0,12,0,7,0,7,0
+Portfolio,com.maya.portfolio.model,SecurityPrice,102,6,10,0,21,3,14,1,9,1
+Portfolio,com.maya.portfolio.model,SecurityPrice.ByDate,9,0,0,0,2,0,2,0,2,0
+Portfolio,com.maya.portfolio.model,Security,150,38,13,0,29,14,19,5,11,5
+Portfolio,com.maya.portfolio.model,LatestSecurityPrice,232,38,34,0,32,17,23,11,6,11
+Portfolio,com.maya.portfolio.model,Exchange,3,0,0,0,1,0,1,0,1,0
+Portfolio,com.maya.portfolio.utils,Dates,9,10,1,1,4,2,2,1,1,1

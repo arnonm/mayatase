@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QuoteFeedData.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Portfolio</a> &gt; <a href="index.source.html" class="el_package">com.maya.portfolio.online</a> &gt; <span class="el_source">QuoteFeedData.java</span></div><h1>QuoteFeedData.java</h1><pre class="source lang-java linenums">package com.maya.portfolio.online;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import com.maya.portfolio.model.LatestSecurityPrice;
+import com.maya.portfolio.model.SecurityPrice;
+
+
+<span class="fc" id="L13">public class QuoteFeedData {</span>
+    
+    public static class RawResponse{
+        private final String url;
+        private final String content;
+
+        public RawResponse(String url, String content) {
+<span class="nc" id="L20">            super();</span>
+<span class="nc" id="L21">            this.url = url;</span>
+<span class="nc" id="L22">            this.content = content;</span>
+<span class="nc" id="L23">        }</span>
+
+        public String getUrl() {
+<span class="nc" id="L26">            return url;</span>
+        }
+
+        public String getContent() {
+<span class="nc" id="L30">            return content;</span>
+        }
+    }
+
+<span class="fc" id="L34">    private final List&lt;LatestSecurityPrice&gt; prices = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L35">    private final List&lt;Exception&gt; errors = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L36">    private final List&lt;RawResponse&gt; responses = new ArrayList&lt;&gt;();</span>
+
+    public static QuoteFeedData withError(Exception error)
+    {
+<span class="nc" id="L40">        QuoteFeedData data = new QuoteFeedData();</span>
+<span class="nc" id="L41">        data.getErrors().add(error);</span>
+<span class="nc" id="L42">        return data;</span>
+    }
+
+    public void addPrice(LatestSecurityPrice price)
+    {
+<span class="nc" id="L47">        this.prices.add(price);</span>
+<span class="nc" id="L48">    }</span>
+
+    public void addAllPrices(Collection&lt;LatestSecurityPrice&gt; prices)
+    {
+<span class="nc" id="L52">        this.prices.addAll(prices);</span>
+<span class="nc" id="L53">    }</span>
+
+    public List&lt;LatestSecurityPrice&gt; getLatestPrices()
+    {
+<span class="nc" id="L57">        return prices;</span>
+    }
+
+    public List&lt;SecurityPrice&gt; getPrices()
+    {
+<span class="nc" id="L62">        return Collections.unmodifiableList(prices.stream().map(p -&gt; new SecurityPrice(p.getDate(), p.getValue()))</span>
+<span class="nc" id="L63">                        .collect(Collectors.toList()));</span>
+    }
+
+    public void addError(Exception error)
+    {
+<span class="nc" id="L68">        this.errors.add(error);</span>
+<span class="nc" id="L69">    }</span>
+
+    public List&lt;Exception&gt; getErrors()
+    {
+<span class="fc" id="L73">        return errors;</span>
+    }
+
+    public void addResponse(String url, String content)
+    {
+<span class="nc" id="L78">        this.responses.add(new RawResponse(url, content));</span>
+<span class="nc" id="L79">    }</span>
+
+    public List&lt;RawResponse&gt; getResponses()
+    {
+<span class="nc" id="L83">        return responses;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
